@@ -1,0 +1,954 @@
+{%- liquid
+  assign image = section.settings.image
+  assign mobile_image = section.settings.mobile_image
+  assign heading = section.settings.heading
+  assign subheading = section.settings.subheading
+  assign text_position = section.settings.text_position
+  assign text_color = section.settings.text_color
+  assign overlay_opacity = section.settings.overlay_opacity
+  assign aspect_ratio = section.settings.aspect_ratio
+  assign mobile_aspect_ratio = section.settings.mobile_aspect_ratio
+  assign card_position = section.settings.card_position
+  assign rotation_speed = section.settings.rotation_speed
+
+  assign product_blocks = section.blocks | where: "type", "product"
+  assign product_count = product_blocks.size
+-%}
+
+<style>
+  #mc-hero-card-{{ section.id }} {
+    --overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};
+    --text-color: {{ text_color }};
+    position: relative;
+    overflow: hidden;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-hero-card__media {
+    position: relative;
+    width: 100%;
+    {% case aspect_ratio %}
+      {% when '16:9' %}
+        aspect-ratio: 16/9;
+      {% when '21:9' %}
+        aspect-ratio: 21/9;
+      {% when '4:3' %}
+        aspect-ratio: 4/3;
+      {% when '3:2' %}
+        aspect-ratio: 3/2;
+      {% when 'full' %}
+        height: 100vh;
+      {% when 'auto' %}
+        aspect-ratio: auto;
+    {% endcase %}
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-hero-card__media img,
+  #mc-hero-card-{{ section.id }} .mc-hero-card__media svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-hero-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, var(--overlay-opacity));
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-hero-card__text {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    color: var(--text-color);
+    pointer-events: none;
+    {% case text_position %}
+      {% when 'top-left' %}
+        align-items: flex-start;
+        justify-content: flex-start;
+      {% when 'top-center' %}
+        align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+      {% when 'center' %}
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      {% when 'bottom-left' %}
+        align-items: flex-start;
+        justify-content: flex-end;
+      {% when 'bottom-center' %}
+        align-items: center;
+        justify-content: flex-end;
+        text-align: center;
+    {% endcase %}
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-hero-card__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-hero-card__subheading {
+    font-size: clamp(14px, 2vw, 20px);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 600px;
+    opacity: 0.9;
+  }
+
+  /* ---- DESKTOP: Floating Product Card ---- */
+  #mc-hero-card-{{ section.id }} .mc-floating-card {
+    position: absolute;
+    z-index: 3;
+    width: 280px;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    {% if card_position == 'left' %}
+      left: 20px;
+      bottom: 20px;
+    {% else %}
+      right: 20px;
+      bottom: 20px;
+    {% endif %}
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 8px 12px 4px;
+    gap: 6px;
+    font-size: 13px;
+    color: #333;
+    user-select: none;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__nav-btn:hover {
+    color: #000;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__counter {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__slides-wrap {
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__slides-wrap:active {
+    cursor: grabbing;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__slides {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__slides.is-dragging {
+    transition: none;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__image a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+    pointer-events: none;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__image:hover img {
+    transform: scale(1.05);
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__info {
+    padding: 12px 14px;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__title {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 2px;
+    color: #000;
+    line-height: 1.3;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__description {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0 0;
+    margin-top: 8px;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__price .mc-compare-price {
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+    margin-right: 6px;
+    font-size: 12px;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__atc {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #000;
+    padding: 4px 0;
+    position: relative;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__atc::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #000;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: right;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__atc:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Dots navigation */
+  #mc-hero-card-{{ section.id }} .mc-floating-card__dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 0 10px;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ccc;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  #mc-hero-card-{{ section.id }} .mc-floating-card__dot.is-active {
+    background: #000;
+  }
+
+  /* ---- MOBILE: Compact horizontal card inside hero ---- */
+  @media (max-width: 749px) {
+    #mc-hero-card-{{ section.id }} .mc-hero-card__media {
+      {% case mobile_aspect_ratio %}
+        {% when '9:16' %}
+          aspect-ratio: 9/16;
+        {% when '3:4' %}
+          aspect-ratio: 3/4;
+        {% when '4:5' %}
+          aspect-ratio: 4/5;
+        {% when '1:1' %}
+          aspect-ratio: 1/1;
+        {% when 'full' %}
+          height: 100vh;
+        {% when 'auto' %}
+          aspect-ratio: auto;
+      {% endcase %}
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-hero-card__text {
+      padding: 20px;
+      padding-bottom: 100px;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      width: auto;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__header {
+      display: none;
+    }
+
+    /* Mobile slide: single row - image | content */
+    #mc-hero-card-{{ section.id }} .mc-floating-card__slide {
+      flex-direction: row;
+      align-items: center;
+      min-width: 100%;
+      flex-wrap: nowrap;
+      padding: 8px;
+      gap: 10px;
+      box-sizing: border-box;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__image {
+      width: 60px;
+      min-width: 60px;
+      max-width: 60px;
+      aspect-ratio: 1/1;
+      border-radius: 3px;
+      overflow: hidden;
+      background: #f5f5f5;
+      flex-shrink: 0;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__image img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+    }
+
+    /* On mobile, info wraps title + description + price row */
+    #mc-hero-card-{{ section.id }} .mc-floating-card__info {
+      padding: 0;
+      border-top: none;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__title {
+      font-size: 10px;
+      margin: 0 0 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__description {
+      font-size: 9px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+
+    /* Price row sits inside the info flow on mobile */
+    #mc-hero-card-{{ section.id }} .mc-floating-card__bottom {
+      padding: 4px 0 0;
+      border-top: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__price {
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__atc {
+      font-size: 9px;
+      white-space: nowrap;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__dots {
+      padding: 0 0 6px;
+      gap: 4px;
+    }
+
+    #mc-hero-card-{{ section.id }} .mc-floating-card__dot {
+      width: 5px;
+      height: 5px;
+    }
+  }
+</style>
+
+<div id="mc-hero-card-{{ section.id }}" class="mc-hero-card">
+  <div class="mc-hero-card__media">
+    {%- if image != blank -%}
+      <picture>
+        {%- if mobile_image != blank -%}
+          <source media="(max-width: 749px)" srcset="{{ mobile_image | image_url: width: 900 }}">
+        {%- endif -%}
+        <img
+          src="{{ image | image_url: width: 2000 }}"
+          srcset="{{ image | image_url: width: 1000 }} 1000w, {{ image | image_url: width: 1500 }} 1500w, {{ image | image_url: width: 2000 }} 2000w"
+          sizes="100vw"
+          alt="{{ image.alt | escape }}"
+          loading="eager"
+          width="{{ image.width }}"
+          height="{{ image.height }}"
+        >
+      </picture>
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+
+    <div class="mc-hero-card__overlay"></div>
+
+    {%- if heading != blank or subheading != blank -%}
+      <div class="mc-hero-card__text">
+        {%- if heading != blank -%}
+          <h2 class="mc-hero-card__heading">{{ heading }}</h2>
+        {%- endif -%}
+        {%- if subheading != blank -%}
+          <p class="mc-hero-card__subheading">{{ subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if product_count > 0 -%}
+      <div class="mc-floating-card" data-floating-card data-rotation-speed="{{ rotation_speed }}">
+        {%- if product_count > 1 -%}
+          <div class="mc-floating-card__header">
+            <button class="mc-floating-card__nav-btn" data-card-prev aria-label="Previous product">&#8249;</button>
+            <span class="mc-floating-card__counter">
+              <span data-card-current>1</span> / {{ product_count }}
+            </span>
+            <button class="mc-floating-card__nav-btn" data-card-next aria-label="Next product">&#8250;</button>
+          </div>
+        {%- endif -%}
+
+        <div class="mc-floating-card__slides-wrap" data-slides-wrap>
+          <div class="mc-floating-card__slides" data-slides-track>
+            {%- for block in product_blocks -%}
+              {%- assign product = block.settings.product -%}
+              {%- if product != blank -%}
+                <div class="mc-floating-card__slide" data-card-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                  <div class="mc-floating-card__image">
+                    <a href="{{ product.url }}" data-card-link>
+                      {%- if product.featured_image != blank -%}
+                        <img
+                          src="{{ product.featured_image | image_url: width: 600 }}"
+                          srcset="{{ product.featured_image | image_url: width: 300 }} 300w, {{ product.featured_image | image_url: width: 600 }} 600w"
+                          sizes="280px"
+                          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                          loading="lazy"
+                          width="{{ product.featured_image.width }}"
+                          height="{{ product.featured_image.height }}"
+                        >
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                  <div class="mc-floating-card__info">
+                    <h3 class="mc-floating-card__title">
+                      <a href="{{ product.url }}">{{ product.title }}</a>
+                    </h3>
+                    {%- if block.settings.custom_description != blank -%}
+                      <p class="mc-floating-card__description">{{ block.settings.custom_description }}</p>
+                    {%- endif -%}
+
+                  <div class="mc-floating-card__bottom">
+                    <div class="mc-floating-card__price">
+                      {%- if product.compare_at_price > product.price -%}
+                        <span class="mc-compare-price">{{ product.compare_at_price | money }}</span>
+                      {%- endif -%}
+                      {%- liquid
+                        assign hero_card_price = product.price
+                        if product.price == 0
+                          assign hc_kid = product.metafields.custom.kid_product.value
+                          assign hc_man = product.metafields.custom.man_product.value
+                          assign hc_woman = product.metafields.custom.women_product.value
+                          if hc_kid != blank or hc_man != blank or hc_woman != blank
+                            assign hero_card_price = 0
+                            if hc_kid != blank
+                              assign hero_card_price = hero_card_price | plus: hc_kid.price
+                            endif
+                            if hc_man != blank
+                              assign hero_card_price = hero_card_price | plus: hc_man.price
+                            endif
+                            if hc_woman != blank
+                              assign hero_card_price = hero_card_price | plus: hc_woman.price
+                            endif
+                          endif
+                        endif
+                      -%}
+                      {{ hero_card_price | money }}
+                    </div>
+
+                    {%- if product.available -%}
+                      <form method="post" action="/cart/add" data-mc-atc-form>
+                        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="mc-floating-card__atc">+ Add to Bag</button>
+                      </form>
+                    {%- else -%}
+                      <span class="mc-floating-card__atc" style="opacity: 0.5; cursor: default;">Sold Out</span>
+                    {%- endif -%}
+                  </div>
+                  </div>{%- comment -%}close .mc-floating-card__info{%- endcomment -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- if product_count > 1 -%}
+          <div class="mc-floating-card__dots" data-card-dots>
+            {%- for block in product_blocks -%}
+              {%- if block.settings.product != blank -%}
+                <button class="mc-floating-card__dot {% if forloop.first %}is-active{% endif %}" data-dot-index="{{ forloop.index0 }}" aria-label="Product {{ forloop.index }}"></button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function() {
+    var section = document.getElementById('mc-hero-card-{{ section.id }}');
+    if (!section) return;
+
+    var card = section.querySelector('[data-floating-card]');
+    if (!card) return;
+
+    var wrap = card.querySelector('[data-slides-wrap]');
+    var track = card.querySelector('[data-slides-track]');
+    var slides = card.querySelectorAll('[data-card-slide]');
+    var total = slides.length;
+    if (total === 0) return;
+
+    var currentIndex = 0;
+    var speed = parseInt(card.getAttribute('data-rotation-speed')) || 5;
+    var speedMs = speed * 1000;
+    var counter = card.querySelector('[data-card-current]');
+    var prevBtn = card.querySelector('[data-card-prev]');
+    var nextBtn = card.querySelector('[data-card-next]');
+    var dots = card.querySelectorAll('[data-dot-index]');
+    var timer = null;
+    var isPaused = false;
+
+    /* Drag/swipe state */
+    var isDragging = false;
+    var startX = 0;
+    var currentTranslate = 0;
+    var prevTranslate = 0;
+    var dragThreshold = 40;
+    var hasMoved = false;
+
+    function getSlideWidth() {
+      return wrap.offsetWidth;
+    }
+
+    function goToSlide(index, animate) {
+      if (animate !== false) {
+        track.classList.remove('is-dragging');
+      }
+      currentIndex = index;
+      currentTranslate = -index * getSlideWidth();
+      prevTranslate = currentTranslate;
+      track.style.transform = 'translateX(' + currentTranslate + 'px)';
+
+      if (counter) counter.textContent = index + 1;
+
+      dots.forEach(function(d, i) {
+        d.classList.toggle('is-active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      goToSlide((currentIndex + 1) % total);
+    }
+
+    function prevSlide() {
+      goToSlide((currentIndex - 1 + total) % total);
+    }
+
+    function startAutoRotate() {
+      stopAutoRotate();
+      if (total <= 1) return;
+      timer = setInterval(function() {
+        if (!isPaused) nextSlide();
+      }, speedMs);
+    }
+
+    function stopAutoRotate() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    /* Navigation buttons */
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        prevSlide();
+        startAutoRotate();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        nextSlide();
+        startAutoRotate();
+      });
+    }
+
+    /* Dots */
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function(e) {
+        e.preventDefault();
+        goToSlide(parseInt(dot.getAttribute('data-dot-index')));
+        startAutoRotate();
+      });
+    });
+
+    /* Pause on hover (desktop) */
+    card.addEventListener('mouseenter', function() { isPaused = true; });
+    card.addEventListener('mouseleave', function() { isPaused = false; });
+
+    /* ---- Drag/Swipe handling ---- */
+    function getPositionX(e) {
+      return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    }
+
+    function dragStart(e) {
+      if (total <= 1) return;
+      isDragging = true;
+      hasMoved = false;
+      startX = getPositionX(e);
+      track.classList.add('is-dragging');
+      stopAutoRotate();
+    }
+
+    function dragMove(e) {
+      if (!isDragging) return;
+      var currentX = getPositionX(e);
+      var diff = currentX - startX;
+      if (Math.abs(diff) > 5) hasMoved = true;
+      currentTranslate = prevTranslate + diff;
+      track.style.transform = 'translateX(' + currentTranslate + 'px)';
+    }
+
+    function dragEnd(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('is-dragging');
+
+      var movedBy = currentTranslate - prevTranslate;
+
+      if (Math.abs(movedBy) > dragThreshold) {
+        if (movedBy < 0 && currentIndex < total - 1) {
+          goToSlide(currentIndex + 1);
+        } else if (movedBy > 0 && currentIndex > 0) {
+          goToSlide(currentIndex - 1);
+        } else {
+          goToSlide(currentIndex);
+        }
+      } else {
+        goToSlide(currentIndex);
+      }
+
+      startAutoRotate();
+    }
+
+    /* Prevent link clicks after drag */
+    card.querySelectorAll('[data-card-link]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        if (hasMoved) e.preventDefault();
+      });
+    });
+
+    /* Mouse events */
+    wrap.addEventListener('mousedown', dragStart);
+    wrap.addEventListener('mousemove', dragMove);
+    wrap.addEventListener('mouseup', dragEnd);
+    wrap.addEventListener('mouseleave', function() {
+      if (isDragging) dragEnd();
+    });
+
+    /* Touch events */
+    wrap.addEventListener('touchstart', dragStart, { passive: true });
+    wrap.addEventListener('touchmove', dragMove, { passive: true });
+    wrap.addEventListener('touchend', dragEnd, { passive: true });
+
+    /* Prevent image dragging */
+    wrap.querySelectorAll('img').forEach(function(img) {
+      img.addEventListener('dragstart', function(e) { e.preventDefault(); });
+    });
+
+    /* Resize handler */
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        goToSlide(currentIndex, false);
+      }, 100);
+    });
+
+    /* Add to cart via AJAX */
+    card.querySelectorAll('[data-mc-atc-form]').forEach(function(form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('.mc-floating-card__atc');
+        var originalText = btn.textContent;
+        btn.textContent = 'Adding...';
+        btn.disabled = true;
+
+        var formData = new FormData(form);
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(function(res) { return res.json(); })
+        .then(function() {
+          btn.textContent = 'Added!';
+          setTimeout(function() {
+            btn.textContent = originalText;
+            btn.disabled = false;
+          }, 1500);
+          // Notify theme: refreshes header cart count + quick-cart drawer contents
+          document.dispatchEvent(new CustomEvent('apps:product-added-to-cart'));
+          // Open the quick-cart drawer by simulating a click on the cart icon
+          var cartIcon = document.querySelector('[data-js-cart-icon]');
+          var quickCart = document.querySelector('.quick-cart');
+          if (cartIcon && quickCart) cartIcon.click();
+        })
+        .catch(function() {
+          btn.textContent = 'Error';
+          setTimeout(function() {
+            btn.textContent = originalText;
+            btn.disabled = false;
+          }, 1500);
+        });
+      });
+    });
+
+    /* Init */
+    goToSlide(0, false);
+    if (total > 1) startAutoRotate();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "MC Hero + Product Card",
+  "tag": "section",
+  "class": "mc-hero-product-card-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image (optional)"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Desktop Aspect Ratio",
+      "default": "16:9",
+      "options": [
+        { "value": "21:9", "label": "21:9 (Ultra wide)" },
+        { "value": "16:9", "label": "16:9 (Wide)" },
+        { "value": "3:2", "label": "3:2" },
+        { "value": "4:3", "label": "4:3" },
+        { "value": "full", "label": "Full screen" },
+        { "value": "auto", "label": "Auto (image ratio)" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile Aspect Ratio",
+      "default": "3:4",
+      "options": [
+        { "value": "9:16", "label": "9:16 (Tall)" },
+        { "value": "3:4", "label": "3:4" },
+        { "value": "4:5", "label": "4:5" },
+        { "value": "1:1", "label": "Square" },
+        { "value": "full", "label": "Full screen" },
+        { "value": "auto", "label": "Auto (image ratio)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 10,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text Position",
+      "default": "bottom-left",
+      "options": [
+        { "value": "top-left", "label": "Top Left" },
+        { "value": "top-center", "label": "Top Center" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom-left", "label": "Bottom Left" },
+        { "value": "bottom-center", "label": "Bottom Center" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Product Card"
+    },
+    {
+      "type": "select",
+      "id": "card_position",
+      "label": "Card Position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Bottom Left" },
+        { "value": "right", "label": "Bottom Right" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "label": "Auto-rotate Speed",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "default": 5,
+      "unit": "sec"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "custom_description",
+          "label": "Short Description (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MC Hero + Product Card",
+      "blocks": [
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

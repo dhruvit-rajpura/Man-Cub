@@ -1,0 +1,339 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:groups.footer_group.name",
+  "sections": {
+    "1774522358c2541158": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_WppFic": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Follow us on @mancub_uk",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": true,
+            "link_alignment": "center",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_WppFic"
+      ],
+      "settings": {
+        "heading": "",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom"
+      }
+    },
+    "newsletter_HcFcMe": {
+      "type": "newsletter",
+      "blocks": {
+        "spacer_p9rRVe": {
+          "type": "spacer",
+          "settings": {
+            "space": 40
+          }
+        },
+        "heading_jnMwbJ": {
+          "type": "heading",
+          "settings": {
+            "title": "Subscribe to our newsletter",
+            "heading_tag": "h2",
+            "heading_font_class": "fs-heading-3-base"
+          }
+        },
+        "text_GfCn87": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Include a short sentence describing what someone can expect from your newsletter.</p>",
+            "text_font_class": "fs-body-100"
+          }
+        },
+        "spacer_TBfKJQ": {
+          "type": "spacer",
+          "settings": {
+            "space": 4
+          }
+        },
+        "newsletter_signup_Mf8xzF": {
+          "type": "newsletter_signup",
+          "settings": {
+            "enable_collect_customer_name": false,
+            "signup_link_text": "Sign up"
+          }
+        },
+        "spacer_C8KDbD": {
+          "type": "spacer",
+          "settings": {
+            "space": 40
+          }
+        }
+      },
+      "block_order": [
+        "spacer_p9rRVe",
+        "heading_jnMwbJ",
+        "text_GfCn87",
+        "spacer_TBfKJQ",
+        "newsletter_signup_Mf8xzF",
+        "spacer_C8KDbD"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "alignment": "center",
+        "focal_point": "image_presentation",
+        "focal_point_mobile": "image_presentation",
+        "background_color": "#2e3241",
+        "text_color": "#ffffff",
+        "input_color": "#2e3241",
+        "input_background": "#ffffff",
+        "button_background_color": "#1d212a",
+        "button_text_color": "#ffffff",
+        "color_overlay": "#000000",
+        "color_overlay_gradient": "",
+        "overlay_opacity": 0,
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom",
+        "content_width": "custom",
+        "custom_content_width": 700
+      }
+    },
+    "multi_column_WDjz9q": {
+      "type": "multi-column",
+      "blocks": {
+        "icon_column_KDFRqz": {
+          "type": "icon_column",
+          "settings": {
+            "icon": "moving-truck",
+            "icon_width": 38,
+            "icon_width_mobile": 20,
+            "accent": "",
+            "heading": "Easy Returns",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "<p>Your exchange ships out as soon as you email us.</p>",
+            "text_font_class": "fs-body-75",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--secondary"
+          }
+        },
+        "icon_column_cDQUaj": {
+          "type": "icon_column",
+          "settings": {
+            "icon": "globe",
+            "icon_width": 38,
+            "icon_width_mobile": 20,
+            "accent": "",
+            "heading": "Worldwide Shipping",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "<p>Receive your order around  3-5 days after shipment</p>",
+            "text_font_class": "fs-body-75",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--secondary"
+          }
+        },
+        "icon_column_EwNdUR": {
+          "type": "icon_column",
+          "settings": {
+            "icon": "cotton",
+            "icon_width": 38,
+            "icon_width_mobile": 20,
+            "accent": "",
+            "heading": "Atelier Grade",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "<p>Made with love, using high-quality premium materials</p>",
+            "text_font_class": "fs-body-75",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--secondary"
+          }
+        },
+        "icon_column_pqxnCT": {
+          "type": "icon_column",
+          "settings": {
+            "icon": "bill",
+            "icon_width": 38,
+            "icon_width_mobile": 20,
+            "accent": "",
+            "heading": "Buy Now, Pay Later",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "<p>Instalments with 0% interest and no extra charges through Shop Pay</p>",
+            "text_font_class": "fs-body-75",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--secondary"
+          }
+        }
+      },
+      "block_order": [
+        "icon_column_KDFRqz",
+        "icon_column_cDQUaj",
+        "icon_column_EwNdUR",
+        "icon_column_pqxnCT"
+      ],
+      "settings": {
+        "title": "",
+        "heading_tag": "h2",
+        "heading_font_class": "fs-heading-3-base",
+        "subheading": "",
+        "heading_alignment": "center",
+        "content_vertical_alignment": "center",
+        "content_background_padding": "medium",
+        "columns": "4",
+        "column_spacing": 28,
+        "row_spacing": 28,
+        "column_alignment": "center",
+        "enable_slider_mobile": true,
+        "columns_mobile": "1",
+        "column_spacing_mobile": 20,
+        "row_spacing_mobile": 20,
+        "column_alignment_mobile": "left",
+        "background_behind_columns": false,
+        "background_color": "#ffffff",
+        "text_color": "#343434",
+        "button_background_color": "#343434",
+        "button_text_color": "#343434",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "text_44FTLw": {
+          "type": "text",
+          "settings": {
+            "desktop_width": 20,
+            "desktop_padding": 0,
+            "collapse_on_mobile": true,
+            "title": "",
+            "show_title_on_desktop": true,
+            "text": "",
+            "image": "shopify://shop_images/image.png",
+            "image_max_width": 220,
+            "image_placement": "above_text",
+            "show_social_icons": false,
+            "enable_follow_on_shop": false
+          }
+        },
+        "footer-mancub": {
+          "type": "links",
+          "settings": {
+            "desktop_width": 18,
+            "desktop_padding": 0,
+            "collapse_on_mobile": true,
+            "title": "MANCUB",
+            "show_title_on_desktop": true,
+            "link_list": "mancub-footer"
+          }
+        },
+        "footer-store": {
+          "type": "links",
+          "settings": {
+            "desktop_width": 15,
+            "desktop_padding": 0,
+            "collapse_on_mobile": true,
+            "title": "Store",
+            "show_title_on_desktop": true,
+            "link_list": "store-footer"
+          }
+        },
+        "footer-orders": {
+          "type": "links",
+          "settings": {
+            "desktop_width": 20,
+            "desktop_padding": 0,
+            "collapse_on_mobile": true,
+            "title": "Customer Care",
+            "show_title_on_desktop": true,
+            "link_list": "orders"
+          }
+        },
+        "footer-newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "desktop_width": 25,
+            "desktop_padding": 0,
+            "collapse_on_mobile": true,
+            "title": "",
+            "show_title_on_desktop": true,
+            "enable_collect_customer_name": false,
+            "text": "<p>Subscribe to our ‘Male on Sonday’ </p><p>and get 10% off your first order</p>",
+            "show_social_icons": true,
+            "enable_follow_on_shop": true
+          }
+        },
+        "spacer_mrUjBB": {
+          "type": "spacer",
+          "settings": {
+            "desktop_width": 5
+          }
+        },
+        "footer_bar_UE3F6h": {
+          "type": "footer_bar",
+          "settings": {
+            "desktop_width": 100,
+            "desktop_padding": 0,
+            "link_list": "footer-bottom-menu",
+            "alignment": "center",
+            "separator": "none",
+            "text_transform": "none",
+            "font_size": 14,
+            "show_top_border": false,
+            "top_spacing": 12,
+            "bottom_spacing": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_44FTLw",
+        "footer-mancub",
+        "footer-store",
+        "footer-orders",
+        "footer-newsletter",
+        "spacer_mrUjBB",
+        "footer_bar_UE3F6h"
+      ],
+      "settings": {
+        "enable_locale_selector": false,
+        "enable_country_selector": false,
+        "show_payment_icons": true,
+        "additional_copyright_text": ""
+      }
+    }
+  },
+  "order": [
+    "1774522358c2541158",
+    "newsletter_HcFcMe",
+    "multi_column_WDjz9q",
+    "footer"
+  ]
+}

@@ -1,0 +1,49 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "display_type": "selected",
+        "collection_list": [
+          "accessories",
+          "bottoms",
+          "gifts-for-dad",
+          "gift-voucher",
+          "holiday-shop",
+          "matching-hoodies",
+          "jackets",
+          "joggers",
+          "new-in",
+          "matching-jackets-for-man-cub",
+          "sale",
+          "matching-shirts-for-father-and-son",
+          "father-son-swim-shorts",
+          "tops",
+          "trousers",
+          "t-shirts"
+        ],
+        "columns": "3",
+        "mobile_columns": "2",
+        "rows": "4",
+        "collection_listing_aspect_ratio": "square",
+        "label_style": "overlay",
+        "overlay_title_background_style": "solid",
+        "overlay_text_color": "#2e3241",
+        "overlay_title_background": "#fcfcf9",
+        "enable_animation": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

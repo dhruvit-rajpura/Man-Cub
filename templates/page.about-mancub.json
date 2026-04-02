@@ -1,0 +1,248 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "enable_animation": true,
+        "content_width": "custom",
+        "custom_content_width": 700
+      }
+    },
+    "mc_hero_banner_Tmz6Qg": {
+      "type": "mc-hero-banner",
+      "name": "MC Hero Banner",
+      "settings": {
+        "image": "shopify://shop_images/ManCub-Shoot-Manchester-7873.jpg",
+        "desktop_height": 55,
+        "mobile_height": 50,
+        "min_height": 400,
+        "overlay_opacity": 30,
+        "image_position": "center",
+        "date_text": "",
+        "date_size": 12,
+        "small_text_above": "",
+        "small_text_size": 12,
+        "heading": "Our Story",
+        "heading_size": 52,
+        "heading_size_mobile": 28,
+        "heading_weight": "600",
+        "subheading": "",
+        "subheading_size": 15,
+        "button_text": "VIEW PRODUCTS",
+        "button_link": "shopify://collections/all",
+        "button_size": 14,
+        "button_style": "underline",
+        "bottom_line_text": "",
+        "bottom_line_link": "",
+        "bottom_line_size": 11,
+        "text_alignment": "center",
+        "vertical_position": "center"
+      }
+    },
+    "rich_text_dzwQxN": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_WDJw3c": {
+          "type": "heading",
+          "settings": {
+            "title": "",
+            "heading_tag": "h2",
+            "heading_font_class": "fs-heading-2-base"
+          }
+        },
+        "text_86QmyN": {
+          "type": "text",
+          "settings": {
+            "text": "<p>MANCUB’s concept is simple. We believe that for Father & Son, Uncle & Nephew, or any other Man & Cub combination, matching outfits shouldn’t require compromise on quality and style.<br/><br/>…But being MANCUB is so much more than just matching clothes. It’s that special, and unique bond between Man & Cub. MANCUB Men are proud of their Cub’s. We’re just proud to style them and let them wear that pride on their sleeves.<br/><br/>Be it Man, Cub, Mum, or a random onlooker, there’s guaranteed smiles all round when you’re ‘Being MANCUB’.<br/><br/>Further down this page you can read about our principles and our story, but first, a note on our future. Just like your Cubs, our future is in your hands and we’ll be moulded by your guidance…so please let us know what you like, what you don’t, and what products you’d like to see next. You can do that </p>",
+            "text_font_class": "fs-body-100"
+          }
+        }
+      },
+      "block_order": [
+        "heading_WDJw3c",
+        "text_86QmyN"
+      ],
+      "name": "t:sections.rich_text.presets.name",
+      "settings": {
+        "alignment": "center_center",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom",
+        "content_width": "full",
+        "custom_content_width": 700
+      }
+    },
+    "mc_story_slider_atX8Cr": {
+      "type": "mc-story-slider",
+      "blocks": {
+        "slide_XAe8MN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Dom-headshot_08874fd8-f9aa-4f3e-9a6d-77591ec6fa0b.jpg",
+            "image_position": "top",
+            "heading": "OUR STORY (1 OF 5)",
+            "text": "I'm Dominique, Mother of MANCUB. The idea was born in 2017 when I bumped into an old friend. It wasn’t her I spotted though, it was her husband & son; they were dressed head-to-toe in matching designer gear, and turned heads everywhere they walked. It’s as if they were wearing their FatherSon bond for all to see.",
+            "box_position": "left"
+          }
+        },
+        "slide_hMpRkL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/mancub-cat-Outerwear.jpg",
+            "image_position": "center",
+            "heading": "OUR STORY (2 OF 5)",
+            "text": "We got talking, and I asked about the matching outfits and why they were doing it. She explained how it started as a fad when she first bought them similar looking t-shirts for their holiday, but ever since, her son has refused to leave the bedroom unless he ‘looks like daddy’.",
+            "box_position": "left"
+          }
+        },
+        "slide_PtRqCK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/srtajennie5.jpg",
+            "image_position": "center",
+            "heading": "OUR STORY (3 OF 5)",
+            "text": "Adorable in principle, but unless you want cheap, low quality slogan t-shirts printed with ‘half pint’ & ‘full pint’, there’s not much out there. I wanted to create something for the style conscious male that takes his role as dad seriously, and wants to match whilst looking good.",
+            "box_position": "left"
+          }
+        },
+        "slide_fG6xz9": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/ManCub_LaunchParty_239.jpg",
+            "image_position": "center",
+            "heading": "OUR STORY (4 OF 5)",
+            "text": "Fast forward 17 months and MANCUB was officially launched. We celebrated with a party – an amazing event filled with Men & Cubs from all over the UK celebrating their bond whilst mums watched on with pride.",
+            "box_position": "left"
+          }
+        },
+        "slide_ECw9Rq": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/David-Willey.jpg",
+            "image_position": "center",
+            "heading": "OUR STORY (5 OF 5)",
+            "text": "I hope you love MANCUB as much as I have loved building it. There is no better feeling than receiving photos of your amazing MANCUB moments, so keep them coming.",
+            "box_position": "right"
+          }
+        }
+      },
+      "block_order": [
+        "slide_XAe8MN",
+        "slide_hMpRkL",
+        "slide_PtRqCK",
+        "slide_fG6xz9",
+        "slide_ECw9Rq"
+      ],
+      "name": "MC Story Slider",
+      "settings": {}
+    },
+    "mc_principles_grid_UUwhXA": {
+      "type": "mc-principles-grid",
+      "blocks": {
+        "tile_LXVbfp": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ManCub-Shoot-Manchester-7015.jpg",
+            "image_position": "center",
+            "title": "BE AUTHENTIC",
+            "text": "MANCUB isn’t fake. It isn’t forced. It’s authentic. We’re as real as the connection between man and cub, and that won’t change.",
+            "link": "",
+            "tile_size": "normal"
+          }
+        },
+        "tile_ph4Dtf": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ManCub-Shoot-Manchester-7350.jpg",
+            "image_position": "center",
+            "title": "BE proud",
+            "text": "Pride underpins MANCUB. Our men are proud of their cubs and we’re proud to style them.",
+            "link": "",
+            "tile_size": "normal"
+          }
+        },
+        "tile_hCkVLW": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ManCub-Shoot-Manchester-7713-1-e1524650659898_0984b851-d715-4643-8519-4fdb9ea60745.jpg",
+            "image_position": "center",
+            "title": "BE AUTHENTIC",
+            "text": "Remember, dads are superheroes. YOU are a Superhero!",
+            "link": "",
+            "tile_size": "normal"
+          }
+        }
+      },
+      "block_order": [
+        "tile_LXVbfp",
+        "tile_ph4Dtf",
+        "tile_hCkVLW"
+      ],
+      "name": "MC Principles Grid",
+      "settings": {
+        "heading": "MANCUB PRINCIPLES",
+        "subheading": "Welcome to MANCUB.",
+        "description": "These are the rules we play by."
+      }
+    },
+    "rich_text_YU6dpt": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_faELaX": {
+          "type": "heading",
+          "settings": {
+            "title": "",
+            "heading_tag": "h2",
+            "heading_font_class": "fs-heading-2-base"
+          }
+        },
+        "text_h7Ktx8": {
+          "type": "text",
+          "settings": {
+            "text": "<h1> A man's desire for a son is usually nothing but the wish to duplicate himself in order that such a remarkable pattern may not be lost on the world                    </h1>",
+            "text_font_class": "fs-body-200"
+          }
+        },
+        "text_VAGRrt": {
+          "type": "text",
+          "settings": {
+            "text": "<h6>Helen Rowland</h6>",
+            "text_font_class": "fs-body-100"
+          }
+        }
+      },
+      "block_order": [
+        "heading_faELaX",
+        "text_h7Ktx8",
+        "text_VAGRrt"
+      ],
+      "name": "t:sections.rich_text.presets.name",
+      "settings": {
+        "alignment": "center_center",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-bottom-only",
+        "content_width": "custom",
+        "custom_content_width": 700
+      }
+    }
+  },
+  "order": [
+    "main",
+    "mc_hero_banner_Tmz6Qg",
+    "rich_text_dzwQxN",
+    "mc_story_slider_atX8Cr",
+    "mc_principles_grid_UUwhXA",
+    "rich_text_YU6dpt"
+  ]
+}

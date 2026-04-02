@@ -1,0 +1,74 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "enable_animation": true,
+        "content_width": "custom",
+        "custom_content_width": 700
+      }
+    },
+    "mc_hero_banner_MyVBQz": {
+      "type": "mc-hero-banner",
+      "name": "MC Hero Banner",
+      "settings": {
+        "image": "shopify://shop_images/images_db1b88be-bf54-40bc-872d-6ac07717c7e4.jpg",
+        "desktop_height": 30,
+        "mobile_height": 50,
+        "min_height": 300,
+        "overlay_opacity": 30,
+        "image_position": "center",
+        "date_text": "",
+        "date_size": 12,
+        "small_text_above": "",
+        "small_text_size": 12,
+        "heading": "RETURNS",
+        "heading_size": 52,
+        "heading_size_mobile": 28,
+        "heading_weight": "600",
+        "subheading": "",
+        "subheading_size": 15,
+        "button_text": "",
+        "button_link": "",
+        "button_size": 12,
+        "button_style": "underline",
+        "bottom_line_text": "",
+        "bottom_line_link": "",
+        "bottom_line_size": 11,
+        "text_alignment": "center",
+        "vertical_position": "center"
+      }
+    },
+    "page_section_jWmTm6": {
+      "type": "page-section",
+      "name": "t:sections.page_section.presets.name",
+      "settings": {
+        "title": "",
+        "heading_tag": "h2",
+        "heading_font_class": "fs-heading-3-base",
+        "heading_alignment": "left",
+        "page": "returns",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom",
+        "content_width": "custom",
+        "custom_content_width": 1000
+      }
+    }
+  },
+  "order": [
+    "main",
+    "mc_hero_banner_MyVBQz",
+    "page_section_jWmTm6"
+  ]
+}

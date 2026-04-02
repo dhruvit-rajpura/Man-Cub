@@ -1,0 +1,300 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "enable_animation": true,
+        "content_width": "custom",
+        "custom_content_width": 700
+      }
+    },
+    "mc_hero_banner_PWhpm3": {
+      "type": "mc-hero-banner",
+      "name": "MC Hero Banner",
+      "settings": {
+        "image": "shopify://shop_images/JNP6995.jpg",
+        "desktop_height": 45,
+        "min_height": 400,
+        "overlay_opacity": 30,
+        "date_text": "",
+        "date_size": 12,
+        "small_text_above": "",
+        "small_text_size": 12,
+        "heading": "help & faq",
+        "heading_size": 52,
+        "heading_size_mobile": 28,
+        "heading_weight": "600",
+        "subheading": "",
+        "subheading_size": 15,
+        "button_text": "Get quick answers from our help & FAQ section",
+        "button_link": "",
+        "button_size": 12,
+        "button_style": "underline",
+        "bottom_line_text": "",
+        "bottom_line_link": "",
+        "bottom_line_size": 11,
+        "text_alignment": "center",
+        "vertical_position": "center"
+      }
+    },
+    "page_section_M6A6T4": {
+      "type": "page-section",
+      "disabled": true,
+      "name": "t:sections.page_section.presets.name",
+      "settings": {
+        "title": "",
+        "heading_tag": "h2",
+        "heading_font_class": "fs-heading-3-base",
+        "heading_alignment": "left",
+        "page": "help-faqs",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom",
+        "content_width": "custom",
+        "custom_content_width": 700
+      }
+    },
+    "multi_column_Hh9RKe": {
+      "type": "multi-column",
+      "blocks": {
+        "image_column_RN8Y7p": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/Delivery.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://pages/delivery",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Delivery",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        },
+        "image_column_tMV9Ha": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/New_Project.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://pages/returns",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Returns",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        },
+        "image_column_nwRtnF": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/New_Project_1.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://collections/all",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Products",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        },
+        "image_column_8XBWEf": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/New_Project_2.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://pages/payment",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Payments",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        },
+        "image_column_qJ7jWB": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/New_Project_3.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://pages/sizing",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Sizing",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        },
+        "image_column_7KfJ6F": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/New_Project_4.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://pages/terms-conditions",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Others",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        },
+        "image_column_Hmy69z": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/New_Project_5.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://pages/orders",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Orders",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        },
+        "image_column_DV7DGP": {
+          "type": "image_column",
+          "settings": {
+            "image": "shopify://shop_images/New_Project_6.png",
+            "image_width": 79,
+            "aspect_ratio": "natural",
+            "enable_image_crop_circle": false,
+            "focal_point": "image_presentation",
+            "image_position": "above_text",
+            "image_link": "shopify://pages/contact",
+            "small_caption": "",
+            "accent": "",
+            "heading": "Contact Us",
+            "heading_tag": "h3",
+            "heading_font_class": "fs-heading-4-base",
+            "text": "",
+            "text_font_class": "fs-body-100",
+            "text_max_width": 100,
+            "link": "",
+            "link_text": "",
+            "button_style": "btn--primary"
+          }
+        }
+      },
+      "block_order": [
+        "image_column_RN8Y7p",
+        "image_column_tMV9Ha",
+        "image_column_nwRtnF",
+        "image_column_8XBWEf",
+        "image_column_qJ7jWB",
+        "image_column_7KfJ6F",
+        "image_column_Hmy69z",
+        "image_column_DV7DGP"
+      ],
+      "name": "t:sections.multi_column.presets.name",
+      "settings": {
+        "title": "",
+        "heading_tag": "h2",
+        "heading_font_class": "fs-heading-3-base",
+        "subheading": "",
+        "heading_alignment": "center",
+        "content_vertical_alignment": "top",
+        "content_background_padding": "medium",
+        "columns": "2",
+        "column_spacing": 28,
+        "row_spacing": 28,
+        "column_alignment": "center",
+        "enable_slider_mobile": false,
+        "columns_mobile": "2",
+        "column_spacing_mobile": 20,
+        "row_spacing_mobile": 20,
+        "column_alignment_mobile": "left",
+        "background_behind_columns": false,
+        "background_color": "",
+        "text_color": "#000000",
+        "button_background_color": "#000000",
+        "button_text_color": "#FFFFFF",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "mc_hero_banner_PWhpm3",
+    "page_section_M6A6T4",
+    "multi_column_Hh9RKe"
+  ]
+}

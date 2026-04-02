@@ -1,0 +1,193 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "enable_animation": true,
+        "content_width": "custom",
+        "custom_content_width": 1000
+      }
+    },
+    "image_with_text_g8hnVb": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_9T9g8M": {
+          "type": "heading",
+          "settings": {
+            "title": "MANCUBERS WEARING OUR PULL-OVER HOODIES IN TWILL",
+            "heading_tag": "h2",
+            "heading_font_class": "fs-heading-display-3"
+          }
+        },
+        "subheading_PAdqJg": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "subheading": "Use these sections to promote a particular feature with editorial photography.",
+            "subheading_tag": "h3",
+            "subheading_font_class": "fs-heading-5-base"
+          }
+        },
+        "button_Uw8L6i": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "link": "",
+            "link_text": "Read more",
+            "button_style": "btn--primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_9T9g8M",
+        "subheading_PAdqJg",
+        "button_Uw8L6i"
+      ],
+      "name": "t:sections.image_with_text.presets.name",
+      "settings": {
+        "image_position": "right",
+        "image": "shopify://shop_images/JNP6995.jpg",
+        "aspect_ratio": "square",
+        "focal_point": "image_presentation",
+        "image_caption": "",
+        "text_alignment": "center",
+        "show_small_image": false,
+        "image_small_aspect": "square",
+        "image_small_focal_point": "image_presentation",
+        "background_color": "",
+        "text_color": "#000000",
+        "button_background_color": "#000000",
+        "button_text_color": "#FFFFFF",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom"
+      }
+    },
+    "image_with_text_3DpQDE": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_XjV3Fi": {
+          "type": "heading",
+          "settings": {
+            "title": "MANCUBERS WEARING OUR ZIP THROUGH HOODIES IN GREY MARL",
+            "heading_tag": "h2",
+            "heading_font_class": "fs-heading-display-3"
+          }
+        },
+        "subheading_tNEmNW": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "subheading": "Use these sections to promote a particular feature with editorial photography.",
+            "subheading_tag": "h3",
+            "subheading_font_class": "fs-heading-5-base"
+          }
+        },
+        "button_R9HmC7": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "link": "",
+            "link_text": "Read more",
+            "button_style": "btn--primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_XjV3Fi",
+        "subheading_tNEmNW",
+        "button_R9HmC7"
+      ],
+      "name": "t:sections.image_with_text.presets.name",
+      "settings": {
+        "image_position": "left",
+        "image": "shopify://shop_images/ManCub-Shoot-Manchester-6797.jpg",
+        "aspect_ratio": "square",
+        "focal_point": "image_presentation",
+        "image_caption": "",
+        "text_alignment": "center",
+        "show_small_image": false,
+        "image_small_aspect": "square",
+        "image_small_focal_point": "image_presentation",
+        "background_color": "",
+        "text_color": "#000000",
+        "button_background_color": "#000000",
+        "button_text_color": "#FFFFFF",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom"
+      }
+    },
+    "image_with_text_9VXLCK": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_k3rTJG": {
+          "type": "heading",
+          "settings": {
+            "title": "MANCUBERS WEARING OUR TROPICAL RESORT SHIRTS AND SWIMSHORTS",
+            "heading_tag": "h2",
+            "heading_font_class": "fs-heading-display-3"
+          }
+        },
+        "subheading_x9JA6G": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "subheading": "Use these sections to promote a particular feature with editorial photography.",
+            "subheading_tag": "h3",
+            "subheading_font_class": "fs-heading-5-base"
+          }
+        },
+        "button_QKXDzP": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "link": "",
+            "link_text": "Read more",
+            "button_style": "btn--primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_k3rTJG",
+        "subheading_x9JA6G",
+        "button_QKXDzP"
+      ],
+      "name": "t:sections.image_with_text.presets.name",
+      "settings": {
+        "image_position": "right",
+        "image": "shopify://shop_images/Screen-Shot-2022-12-06-at-18_18_04-e1670350872578.png",
+        "aspect_ratio": "square",
+        "focal_point": "image_presentation",
+        "image_caption": "",
+        "text_alignment": "center",
+        "show_small_image": false,
+        "image_small_aspect": "square",
+        "image_small_focal_point": "image_presentation",
+        "background_color": "",
+        "text_color": "#000000",
+        "button_background_color": "#000000",
+        "button_text_color": "#FFFFFF",
+        "enable_animation": true,
+        "divider_style": "none",
+        "section_padding": "section--vertical-padding-top-bottom"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_with_text_g8hnVb",
+    "image_with_text_3DpQDE",
+    "image_with_text_9VXLCK"
+  ]
+}

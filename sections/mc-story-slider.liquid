@@ -1,0 +1,161 @@
+{%- comment -%}
+  MC Story Slider - Full-width image slides with white text box, left/right position
+{%- endcomment -%}
+
+<div class="mc-story-slider" id="mcStorySlider-{{ section.id }}">
+  <div class="mc-story-slider__track">
+    {%- for block in section.blocks -%}
+      <div class="mc-story-slider__slide" {{ block.shopify_attributes }}
+        style="background-image: url('{{ block.settings.image | image_url: width: 1920 }}'); background-position: {{ block.settings.image_position | default: 'center' }};">
+        <div class="mc-story-slider__box mc-story-slider__box--{{ block.settings.box_position }}">
+          {%- if block.settings.heading != blank -%}
+            <h3>{{ block.settings.heading }}</h3>
+          {%- endif -%}
+          <div class="mc-story-slider__line"></div>
+          {%- if block.settings.text != blank -%}
+            <p>{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+  <button class="mc-story-slider__nav mc-story-slider__nav--prev" aria-label="Previous">&#8249;</button>
+  <button class="mc-story-slider__nav mc-story-slider__nav--next" aria-label="Next">&#8250;</button>
+</div>
+
+<style>
+.mc-story-slider { position: relative; overflow: hidden; }
+.mc-story-slider__track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
+}
+.mc-story-slider__track::-webkit-scrollbar { display: none; }
+.mc-story-slider__slide {
+  flex: 0 0 100%; scroll-snap-align: start;
+  height: 75vh; min-height: 500px;
+  background-size: cover; background-position: center;
+  position: relative; display: flex; align-items: center;
+}
+.mc-story-slider__box {
+  background: rgba(255,255,255,0.92); padding: 36px 32px;
+  max-width: 400px; position: absolute; top: 50%; transform: translateY(-50%);
+}
+.mc-story-slider__box--right { right: 8%; }
+.mc-story-slider__box--left { left: 8%; }
+.mc-story-slider__box--center { left: 50%; transform: translate(-50%, -50%); }
+.mc-story-slider__box h3 {
+  font-family: 'Instrument Sans', sans-serif; font-size: 16px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px; color: #222;
+}
+.mc-story-slider__line { width: 40px; height: 2px; background: #222; margin-bottom: 14px; }
+.mc-story-slider__box p {
+  font-family: 'Instrument Sans', sans-serif; font-size: 14px;
+  line-height: 1.7; color: #444; margin: 0;
+}
+.mc-story-slider__nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.8); border: none; font-size: 32px;
+  width: 44px; height: 44px; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; z-index: 3; color: #222;
+}
+.mc-story-slider__nav:hover { background: #fff; }
+.mc-story-slider__nav--prev { left: 16px; }
+.mc-story-slider__nav--next { right: 16px; }
+
+/* Tablet */
+@media(max-width:959px) {
+  .mc-story-slider__slide { height: 55vh; min-height: 400px; max-height: 600px; }
+  .mc-story-slider__box { max-width: 340px; padding: 28px 24px; }
+  .mc-story-slider__box p { font-size: 13px; line-height: 1.6; }
+}
+
+/* Mobile */
+@media(max-width:768px) {
+  .mc-story-slider__slide {
+    height: auto; min-height: 420px; max-height: none;
+    display: flex; flex-direction: column;
+    align-items: stretch; justify-content: flex-end;
+  }
+  .mc-story-slider__box {
+    position: relative; top: auto; left: auto; right: auto;
+    transform: none; max-width: 100%;
+    margin: 0; padding: 20px 24px;
+    background: rgba(255,255,255,0.95);
+  }
+  .mc-story-slider__box--right,
+  .mc-story-slider__box--left,
+  .mc-story-slider__box--center {
+    left: auto; right: auto;
+    transform: none;
+  }
+  .mc-story-slider__box h3 { font-size: 13px; margin: 0 0 8px; }
+  .mc-story-slider__line { width: 30px; margin-bottom: 10px; }
+  .mc-story-slider__box p { font-size: 12px; line-height: 1.55; }
+  .mc-story-slider__nav { width: 36px; height: 36px; font-size: 26px; }
+  .mc-story-slider__nav--prev { left: 8px; }
+  .mc-story-slider__nav--next { right: 8px; }
+}
+
+/* Small mobile */
+@media(max-width:479px) {
+  .mc-story-slider__slide { min-height: 360px; }
+  .mc-story-slider__box { padding: 16px 20px; }
+  .mc-story-slider__box h3 { font-size: 12px; margin: 0 0 6px; }
+  .mc-story-slider__box p { font-size: 11px; line-height: 1.5; }
+  .mc-story-slider__line { width: 24px; height: 1.5px; margin-bottom: 8px; }
+}
+</style>
+
+<script>
+(function() {
+  var section = document.getElementById('mcStorySlider-{{ section.id }}');
+  if (!section) return;
+  var track = section.querySelector('.mc-story-slider__track');
+  section.querySelector('.mc-story-slider__nav--next').addEventListener('click', function() {
+    track.scrollBy({ left: track.offsetWidth, behavior: 'smooth' });
+  });
+  section.querySelector('.mc-story-slider__nav--prev').addEventListener('click', function() {
+    track.scrollBy({ left: -track.offsetWidth, behavior: 'smooth' });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "MC Story Slider",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Background Image" },
+        {
+          "type": "select", "id": "image_position", "label": "Image Focus Point",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" },
+            { "value": "left center", "label": "Left" },
+            { "value": "right center", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "OUR STORY (1 OF 5)" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Enter your story text here..." },
+        {
+          "type": "select", "id": "box_position", "label": "Text Box Position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+            { "value": "center", "label": "Center" }
+          ],
+          "default": "right"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "MC Story Slider", "blocks": [{ "type": "slide" }] }]
+}
+{% endschema %}

@@ -1,0 +1,182 @@
+{%- comment -%}
+  MC Principles Grid - Row 1: heading + first tile side by side. Row 2+: remaining tiles in 2-col grid
+{%- endcomment -%}
+
+<div class="mc-principles" id="mc-principles-{{ section.id }}">
+  {%- comment -%} ROW 1: Heading left + First tile right {%- endcomment -%}
+  <div class="mc-principles__top">
+    {%- if section.settings.heading != blank -%}
+      <div class="mc-principles__header mc-scroll-fade">
+        <h2>{{ section.settings.heading }}</h2>
+        <div class="mc-principles__sep"></div>
+        {%- if section.settings.subheading != blank -%}
+          <p>{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p>{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      {%- assign first_block = section.blocks[0] -%}
+      <{% if first_block.settings.link != blank %}a href="{{ first_block.settings.link }}"{% else %}div{% endif %}
+        class="mc-principles__tile mc-scroll-fade"
+        style="background-image: url('{{ first_block.settings.image | image_url: width: 1600 }}'); background-position: {{ first_block.settings.image_position | default: 'center' }};"
+        {{ first_block.shopify_attributes }}
+      >
+        <div class="mc-principles__tile-overlay">
+          {%- if first_block.settings.title != blank -%}<h4>{{ first_block.settings.title }}</h4>{%- endif -%}
+          <div class="mc-principles__tile-line"></div>
+          {%- if first_block.settings.text != blank -%}<p>{{ first_block.settings.text }}</p>{%- endif -%}
+        </div>
+      </{% if first_block.settings.link != blank %}a{% else %}div{% endif %}>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ROW 2+: Remaining tiles {%- endcomment -%}
+  {%- if section.blocks.size > 1 -%}
+    <div class="mc-principles__bottom">
+      {%- for block in section.blocks -%}
+        {%- if forloop.index > 1 -%}
+          <{% if block.settings.link != blank %}a href="{{ block.settings.link }}"{% else %}div{% endif %}
+            class="mc-principles__tile mc-scroll-fade {% if block.settings.tile_size == 'tall' %}mc-principles__tile--tall{% elsif block.settings.tile_size == 'wide' %}mc-principles__tile--wide{% endif %}"
+            style="background-image: url('{{ block.settings.image | image_url: width: 1600 }}'); background-position: {{ block.settings.image_position | default: 'center' }};"
+            {{ block.shopify_attributes }}
+          >
+            <div class="mc-principles__tile-overlay">
+              {%- if block.settings.title != blank -%}<h4>{{ block.settings.title }}</h4>{%- endif -%}
+              <div class="mc-principles__tile-line"></div>
+              {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
+            </div>
+          </{% if block.settings.link != blank %}a{% else %}div{% endif %}>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+.mc-principles { max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
+
+/* Row 1: heading + first tile side by side */
+.mc-principles__top {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;
+}
+.mc-principles__header {
+  display: flex; flex-direction: column; justify-content: center; padding: 20px 0;
+}
+.mc-principles__header h2 {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: clamp(24px, 3.5vw, 40px); font-weight: 400;
+  letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 20px; line-height: 1.2; color: #222;
+}
+.mc-principles__sep { width: 50px; height: 2px; background: #222; margin-bottom: 16px; }
+.mc-principles__header p {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15px; line-height: 1.6; color: #555; margin: 0 0 4px;
+}
+
+/* Row 2+: remaining tiles */
+.mc-principles__bottom {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+
+/* Tiles */
+.mc-principles__tile {
+  display: block; background-size: cover; background-position: center;
+  position: relative; min-height: 380px; overflow: hidden; text-decoration: none;
+}
+.mc-principles__tile--tall { min-height: 480px; }
+.mc-principles__tile--wide { grid-column: span 2; min-height: 400px; }
+.mc-principles__tile-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  padding: 30px;
+}
+.mc-principles__tile-overlay h4 {
+  color: #fff; font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; margin: 0 0 8px;
+}
+.mc-principles__tile-line { width: 30px; height: 2px; background: #fff; margin-bottom: 10px; }
+.mc-principles__tile-overlay p {
+  color: rgba(255,255,255,0.85); font-family: 'Instrument Sans', sans-serif;
+  font-size: 13px; line-height: 1.6; margin: 0;
+}
+.mc-scroll-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.mc-scroll-fade.is-visible { opacity: 1; transform: translateY(0); }
+
+@media(max-width:768px) {
+  .mc-principles { padding: 40px 20px; }
+  .mc-principles__top { grid-template-columns: 1fr; }
+  .mc-principles__bottom { grid-template-columns: 1fr; }
+  .mc-principles__tile { min-height: 300px; }
+  .mc-principles__tile--tall { min-height: 360px; }
+  .mc-principles__tile--wide { grid-column: span 1; }
+}
+</style>
+
+<script>
+(function() {
+  var els = document.querySelectorAll('#mc-principles-{{ section.id }} .mc-scroll-fade');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    els.forEach(function(el) { obs.observe(el); });
+  } else { els.forEach(function(el) { el.classList.add('is-visible'); }); }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "MC Principles Grid",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "MANCUB PRINCIPLES" },
+    { "type": "text", "id": "subheading", "label": "Subheading Line 1", "default": "Welcome to MANCUB." },
+    { "type": "text", "id": "description", "label": "Subheading Line 2", "default": "These are the rules we play by." }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Image Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "select", "id": "image_position", "label": "Image Focus Point",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" },
+            { "value": "left center", "label": "Left" },
+            { "value": "right center", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "BE AUTHENTIC" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Enter description here..." },
+        { "type": "url", "id": "link", "label": "Link (optional)" },
+        {
+          "type": "select", "id": "tile_size", "label": "Tile Size",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "tall", "label": "Tall" },
+            { "value": "wide", "label": "Wide (full row)" }
+          ],
+          "default": "normal"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "MC Principles Grid",
+    "blocks": [
+      { "type": "tile" },
+      { "type": "tile" },
+      { "type": "tile" }
+    ]
+  }]
+}
+{% endschema %}

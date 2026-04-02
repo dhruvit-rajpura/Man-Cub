@@ -1,0 +1,142 @@
+/* ===== Man Cub - Sale Badge (exact match to live site) ===== */
+
+/* Media container is the positioning reference */
+.product-item__media {
+  position: relative;
+  overflow: visible !important;
+}
+
+.product-item__inner {
+  overflow: visible !important;
+}
+
+/* ===== Man Cub - Premium Navigation Dropdown ===== */
+
+/* Full-width dark mega dropdown - matches WooCommerce style */
+html:not(.no-js) .navigation__submenu[data-depth="1"] {
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  transform: none !important;
+}
+
+/* Make the submenu wrapper itself the dark container with two columns */
+html:not(.no-js) .navigation__submenu[data-depth="1"] {
+  background-color: #1d212b !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 60px;
+  padding: 40px 80px !important;
+}
+
+html:not(.no-js) .navigation__submenu-list {
+  background-color: transparent !important;
+  border: none !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: auto !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  flex: none;
+}
+
+/* Main menu items - bold uppercase */
+html:not(.no-js) .navigation__submenu-item [data-link],
+html:not(.no-js) .navigation__submenu-item a {
+  color: #ffffff !important;
+  font-family: 'Instrument Sans', sans-serif !important;
+  font-size: clamp(20px, 2.5vw, 30px) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  padding: 5px 0 !important;
+  line-height: 1.35 !important;
+  transition: color 0.2s ease, padding-left 0.25s ease !important;
+}
+
+/* Hover effect - indent + dim */
+html:not(.no-js) .navigation__submenu-item [data-link]:hover,
+html:not(.no-js) .navigation__submenu-item a:hover {
+  color: #6b6e75 !important;
+  padding-left: 12px !important;
+}
+
+/* Active/current page */
+html:not(.no-js) .navigation__submenu-item a.active {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Spacing between items */
+html:not(.no-js) .navigation__submenu-item + .navigation__submenu-item {
+  margin-top: 2px !important;
+}
+
+/* Chevron icon color + size */
+html:not(.no-js) .navigation__submenu-item .navigation__submenu-child-link .icon {
+  color: #ffffff !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* ===== Secondary links - right column beside main menu ===== */
+/* Secondary column - top-aligned, bigger text, proper spacing */
+.navigation__submenu-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-left: 50px;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  align-self: flex-start;
+  padding-top: 6px;
+}
+
+.navigation__submenu-secondary a {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-family: 'Instrument Sans', sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  white-space: nowrap;
+  line-height: 1.4 !important;
+}
+
+.navigation__submenu-secondary a:hover {
+  color: #ffffff !important;
+}
+
+/* Nested sub-menus (depth 2) */
+html:not(.no-js) .navigation__submenu[data-depth="2"] .navigation__submenu-list {
+  background-color: #242830 !important;
+  border: none !important;
+  min-height: auto !important;
+  width: 320px !important;
+  padding: 30px 36px !important;
+}
+html:not(.no-js) .navigation__submenu[data-depth="2"] .navigation__submenu-item a,
+html:not(.no-js) .navigation__submenu[data-depth="2"] .navigation__submenu-item [data-link] {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+
+/* Top-level nav links in header - match WooCommerce font style */
+.header__links-list > li > a,
+.header__links-list > li > button,
+.navigation__submenu-trigger.fs-navigation-base {
+  font-family: 'Instrument Sans', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  font-size: 13px !important;
+}
+
+
+.header .icon-button__icon .icon {
+    width: 20px;
+    height: 20px;
+}

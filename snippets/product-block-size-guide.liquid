@@ -1,0 +1,178 @@
+{%- liquid
+  assign size_guide_ref = product.metafields.custom.size_guide.value
+  assign link_text = block.settings.link_text | default: 'Size Guide'
+  assign font_size = block.settings.font_size | default: '14'
+  assign show_underline = block.settings.show_underline
+  assign text_alignment = block.settings.text_alignment | default: 'left'
+
+  comment
+    The metafield points to a metaobject. Try common image field names.
+    Also handle the case where the metafield value IS an image directly.
+  endcomment
+
+  assign sg_image = nil
+
+  if size_guide_ref.image != blank
+    assign sg_image = size_guide_ref.image.value | default: size_guide_ref.image
+  elsif size_guide_ref.size_guide_image != blank
+    assign sg_image = size_guide_ref.size_guide_image.value | default: size_guide_ref.size_guide_image
+  elsif size_guide_ref.chart != blank
+    assign sg_image = size_guide_ref.chart.value | default: size_guide_ref.chart
+  elsif size_guide_ref.media_image != blank
+    assign sg_image = size_guide_ref.media_image.value | default: size_guide_ref.media_image
+  elsif size_guide_ref.file != blank
+    assign sg_image = size_guide_ref.file.value | default: size_guide_ref.file
+  endif
+
+  comment
+    If none of the metaobject fields matched, maybe the metafield value itself is an image
+  endcomment
+  if sg_image == blank and size_guide_ref != blank
+    assign sg_image = size_guide_ref
+  endif
+-%}
+
+{%- if sg_image != blank -%}
+  {%- assign spacing = block.settings.spacing | default: 'none' -%}
+  <div class="product__block product-block-size-guide" {{ block.shopify_attributes }} style="text-align: {{ text_alignment }}; {% case spacing %}{% when 'none' %}padding-top: 0; padding-bottom: 0; margin-top: -4px; margin-bottom: -4px;{% when 'small' %}padding-top: 4px; padding-bottom: 4px;{% when 'medium' %}padding-top: 12px; padding-bottom: 12px;{% when 'large' %}padding-top: 20px; padding-bottom: 20px;{% endcase %}">
+    <button
+      type="button"
+      class="mc-size-guide__trigger"
+      data-mc-size-guide-trigger
+      aria-expanded="false"
+      style="
+        font-size: {{ font_size }}px;
+        {% if show_underline %}text-decoration: underline; text-underline-offset: 3px;{% else %}text-decoration: none;{% endif %}
+      "
+    >
+      {{ link_text }}
+    </button>
+
+    <div class="mc-size-guide__modal" data-mc-size-guide-modal aria-hidden="true">
+      <div class="mc-size-guide__modal-overlay" data-mc-size-guide-close></div>
+      <div class="mc-size-guide__modal-content">
+        <button type="button" class="mc-size-guide__close" data-mc-size-guide-close aria-label="Close">&times;</button>
+        <img
+          src="{{ sg_image | image_url: width: 1200 }}"
+          alt="Size Guide"
+          loading="lazy"
+        >
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .mc-size-guide__trigger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0;
+      transition: opacity 0.2s ease;
+    }
+    .mc-size-guide__trigger:hover {
+      opacity: 0.7;
+    }
+
+    .mc-size-guide__modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .mc-size-guide__modal.is-open {
+      display: flex;
+    }
+
+    .mc-size-guide__modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+    }
+
+    .mc-size-guide__modal-content {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow: auto;
+      border-radius: 4px;
+      padding: 16px;
+    }
+    .mc-size-guide__modal-content img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .mc-size-guide__close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+    .mc-size-guide__close:hover {
+      background: #f0f0f0;
+    }
+
+    @media (max-width: 749px) {
+      .mc-size-guide__modal-content {
+        max-width: 95vw;
+        max-height: 85vh;
+        padding: 12px;
+      }
+    }
+  </style>
+
+  <script>
+    (function() {
+      var block = document.querySelector('[data-mc-size-guide-trigger]');
+      if (!block) return;
+      var section = block.closest('.product-block-size-guide');
+      if (!section) return;
+      var modal = section.querySelector('[data-mc-size-guide-modal]');
+      if (!modal) return;
+
+      block.addEventListener('click', function() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+
+      modal.querySelectorAll('[data-mc-size-guide-close]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          modal.classList.remove('is-open');
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        });
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+          modal.classList.remove('is-open');
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+      });
+    })();
+  </script>
+{%- endif -%}

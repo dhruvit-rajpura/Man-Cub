@@ -1,0 +1,245 @@
+{%- comment -%}
+  MC Hero Banner - Full-width image with date, heading, subheading, button
+  All text customizable: position, size, alignment
+{%- endcomment -%}
+
+<div
+  class="mc-hero-banner"
+  style="
+    {%- if section.settings.image != blank -%}background-image: url('{{ section.settings.image | image_url: width: 1920 }}');{%- endif -%}
+    background-position: {{ section.settings.image_position | default: 'center' }};
+    --mc-hero-height: {{ section.settings.desktop_height }}vh;
+    --mc-hero-mobile-height: {{ section.settings.mobile_height }}vh;
+    min-height: {{ section.settings.min_height }}px;
+  "
+  data-mobile-image="{% if section.settings.mobile_image != blank %}{{ section.settings.mobile_image | image_url: width: 1200 }}{% endif %}"
+>
+  <div class="mc-hero-banner__overlay" style="background: rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+  <div
+    class="mc-hero-banner__content mc-fade-up"
+    style="
+      text-align: {{ section.settings.text_alignment }};
+      justify-content: {{ section.settings.vertical_position }};
+      align-items: {% if section.settings.text_alignment == 'left' %}flex-start{% elsif section.settings.text_alignment == 'right' %}flex-end{% else %}center{% endif %};
+    "
+  >
+    {%- if section.settings.date_text != blank -%}
+      <p class="mc-hero-banner__date" style="font-size: {{ section.settings.date_size }}px;">{{ section.settings.date_text }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.small_text_above != blank -%}
+      <p class="mc-hero-banner__small-above" style="font-size: {{ section.settings.small_text_size }}px;">{{ section.settings.small_text_above }}</p>
+    {%- endif -%}
+
+    <h1 class="mc-hero-banner__title" style="font-size: clamp({{ section.settings.heading_size_mobile }}px, 5vw, {{ section.settings.heading_size }}px); font-weight: {{ section.settings.heading_weight }};">
+      {{ section.settings.heading }}
+    </h1>
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="mc-hero-banner__sub" style="font-size: {{ section.settings.subheading_size }}px;">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.button_text != blank -%}
+      {%- if section.settings.button_link != blank -%}
+        <a href="{{ section.settings.button_link }}" class="mc-hero-banner__btn mc-hero-banner__btn--{{ section.settings.button_style }}" style="font-size: {{ section.settings.button_size }}px;">
+          {{ section.settings.button_text }}
+        </a>
+      {%- else -%}
+        <span class="mc-hero-banner__btn mc-hero-banner__btn--{{ section.settings.button_style }}" style="font-size: {{ section.settings.button_size }}px;">
+          {{ section.settings.button_text }}
+        </span>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if section.settings.bottom_line_text != blank -%}
+      <p class="mc-hero-banner__bottom-line" style="font-size: {{ section.settings.bottom_line_size }}px;">
+        {%- if section.settings.bottom_line_link != blank -%}
+          <a href="{{ section.settings.bottom_line_link }}">{{ section.settings.bottom_line_text }}</a>
+        {%- else -%}
+          {{ section.settings.bottom_line_text }}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+.mc-hero-banner {
+  position: relative; width: 100%; background-size: cover; background-position: center;
+  display: flex; padding: 40px 60px; height: var(--mc-hero-height);
+}
+.mc-hero-banner__overlay { position: absolute; inset: 0; }
+.mc-hero-banner__content {
+  position: relative; z-index: 2; display: flex; flex-direction: column;
+  width: 100%; height: 100%;
+}
+.mc-hero-banner__date {
+  color: rgba(255,255,255,0.85); font-family: 'Instrument Sans', sans-serif;
+  letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 12px; font-weight: 400;
+}
+.mc-hero-banner__small-above {
+  color: rgba(255,255,255,0.8); font-family: 'Instrument Sans', sans-serif;
+  letter-spacing: 0.15em; text-transform: uppercase; margin: 0 0 10px; font-weight: 500;
+}
+.mc-hero-banner__title {
+  color: #fff; font-family: 'Instrument Sans', sans-serif;
+  letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 16px; line-height: 1.15;
+}
+.mc-hero-banner__sub {
+  color: rgba(255,255,255,0.85); font-family: 'Instrument Sans', sans-serif;
+  margin: 0 0 20px; line-height: 1.5;
+}
+.mc-hero-banner__btn {
+  display: inline-block; color: #fff; font-family: 'Instrument Sans', sans-serif;
+  letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+  padding: 10px 0; transition: opacity 0.2s; text-decoration: none;
+}
+.mc-hero-banner__btn:hover { opacity: 0.7; }
+.mc-hero-banner__btn--underline { text-decoration: underline; text-underline-offset: 4px; }
+.mc-hero-banner__btn--outline {
+  border: 1px solid #fff; padding: 12px 28px; text-decoration: none;
+}
+.mc-hero-banner__btn--solid {
+  background: #fff; color: #222; padding: 12px 28px; text-decoration: none;
+}
+.mc-hero-banner__bottom-line {
+  color: rgba(255,255,255,0.75); font-family: 'Instrument Sans', sans-serif;
+  letter-spacing: 0.12em; text-transform: uppercase; margin: 16px 0 0; font-weight: 400;
+}
+.mc-hero-banner__bottom-line a {
+  color: rgba(255,255,255,0.75); text-decoration: underline; text-underline-offset: 3px;
+}
+.mc-hero-banner__bottom-line a:hover { color: #fff; }
+
+.mc-fade-up { animation: mcFadeUp 0.8s ease forwards; opacity: 0; }
+@keyframes mcFadeUp { from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:translateY(0)} }
+
+@media(max-width:768px) {
+  .mc-hero-banner { padding: 30px; height: var(--mc-hero-mobile-height); min-height: 280px; }
+}
+</style>
+
+<script>
+(function(){
+  var el = document.querySelector('.mc-hero-banner[data-mobile-image]');
+  if (!el) return;
+  var mImg = el.getAttribute('data-mobile-image');
+  var desktopImg = el.style.backgroundImage;
+  function swapImage() {
+    if (!mImg) return;
+    el.style.backgroundImage = window.innerWidth <= 768 ? "url('" + mImg + "')" : desktopImg;
+  }
+  swapImage();
+  window.addEventListener('resize', swapImage);
+  window.addEventListener('orientationchange', swapImage);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "MC Hero Banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    { "type": "image_picker", "id": "image", "label": "Background Image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile Image (optional)" },
+    { "type": "range", "id": "desktop_height", "label": "Height (vh)", "min": 30, "max": 100, "step": 5, "default": 65 },
+    { "type": "range", "id": "mobile_height", "label": "Mobile Height (vh)", "min": 30, "max": 100, "step": 5, "default": 50 },
+    { "type": "range", "id": "min_height", "label": "Min Height (px)", "min": 200, "max": 600, "step": 50, "default": 400 },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay Opacity %", "min": 0, "max": 80, "step": 5, "default": 30 },
+    {
+      "type": "select", "id": "image_position", "label": "Image Focus Point",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Date / Small Text"
+    },
+    { "type": "text", "id": "date_text", "label": "Date Text", "info": "e.g. March 28, 2025" },
+    { "type": "range", "id": "date_size", "label": "Date Font Size (px)", "min": 10, "max": 20, "step": 1, "default": 12 },
+    { "type": "text", "id": "small_text_above", "label": "Small Text Above Heading" },
+    { "type": "range", "id": "small_text_size", "label": "Small Text Size (px)", "min": 10, "max": 18, "step": 1, "default": 12 },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "ABOUT MANCUB" },
+    { "type": "range", "id": "heading_size", "label": "Heading Size Desktop (px)", "min": 24, "max": 100, "step": 2, "default": 52 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading Size Mobile (px)", "min": 18, "max": 60, "step": 2, "default": 28 },
+    {
+      "type": "select", "id": "heading_weight", "label": "Heading Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    { "type": "text", "id": "subheading", "label": "Subheading" },
+    { "type": "range", "id": "subheading_size", "label": "Subheading Size (px)", "min": 12, "max": 24, "step": 1, "default": 15 },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    { "type": "text", "id": "button_text", "label": "Button Text", "default": "VIEW PRODUCTS" },
+    { "type": "url", "id": "button_link", "label": "Button Link" },
+    { "type": "range", "id": "button_size", "label": "Button Font Size (px)", "min": 10, "max": 20, "step": 1, "default": 12 },
+    {
+      "type": "select", "id": "button_style", "label": "Button Style",
+      "options": [
+        { "value": "underline", "label": "Underline" },
+        { "value": "outline", "label": "Outline" },
+        { "value": "solid", "label": "Solid" }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Line Text"
+    },
+    { "type": "text", "id": "bottom_line_text", "label": "Bottom Line Text", "info": "e.g. VIEW THIS ARTICLE" },
+    { "type": "url", "id": "bottom_line_link", "label": "Bottom Line Link" },
+    { "type": "range", "id": "bottom_line_size", "label": "Bottom Line Size (px)", "min": 10, "max": 18, "step": 1, "default": 11 },
+    {
+      "type": "header",
+      "content": "Position"
+    },
+    {
+      "type": "select", "id": "text_alignment", "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select", "id": "vertical_position", "label": "Vertical Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "center"
+    }
+  ],
+  "presets": [{ "name": "MC Hero Banner" }]
+}
+{% endschema %}

@@ -1,0 +1,70 @@
+{%- comment -%}
+  Shared bundle group rendering for main-cart and quick-cart.
+  Pass in:
+    * cart: the cart object
+    * item_bundle_id: the bundle ID string
+    * item_bundle_name: the bundle display name
+    * prefix: CSS class prefix ('cart' or 'quick-cart')
+    * show_currency: boolean
+    * currency_code: cart currency ISO code
+{%- endcomment -%}
+
+{%- assign bundle_line_total = 0 -%}
+{%- assign bundle_member_count = 0 -%}
+{%- for bi in cart.items -%}
+  {%- if bi.properties['_bundle_id'] == item_bundle_id -%}
+    {%- assign bundle_line_total = bundle_line_total | plus: bi.final_line_price -%}
+    {%- assign bundle_member_count = bundle_member_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div class="{{ prefix }}__bundle-group" data-bundle-group="{{ item_bundle_id }}">
+  <div class="{{ prefix }}__bundle-header">
+    <div class="{{ prefix }}__bundle-header-info">
+      <h4 class="{{ prefix }}__bundle-title fs-product-card-title">{{ item_bundle_name | default: 'Family Bundle' }} — Family Bundle</h4>
+      <span class="{{ prefix }}__bundle-count fs-body-50 t-opacity-60">{{ bundle_member_count }} items</span>
+    </div>
+    <div class="{{ prefix }}__bundle-header-total fs-body-100">
+      {{ bundle_line_total | money }}
+      {%- if show_currency %} {{ currency_code }}{% endif -%}
+    </div>
+  </div>
+
+  {%- for bi in cart.items -%}
+    {%- if bi.properties['_bundle_id'] == item_bundle_id -%}
+      {%- assign bi_role = bi.properties['For'] | downcase -%}
+      <div class="{{ prefix }}__bundle-sub-item" data-input-item data-id="{{ bi.id }}" data-key="{{ bi.key }}">
+        <div class="{{ prefix }}__bundle-sub-image">
+          {%- if bi.image != blank -%}
+            <img src="{{ bi.image | image_url: width: 120 }}" alt="{{ bi.product.title | escape }}" width="60" height="60" loading="lazy">
+          {%- elsif bi.variant.image != blank -%}
+            <img src="{{ bi.variant.image | image_url: width: 120 }}" alt="{{ bi.product.title | escape }}" width="60" height="60" loading="lazy">
+          {%- elsif bi.product.featured_image != blank -%}
+            <img src="{{ bi.product.featured_image | image_url: width: 120 }}" alt="{{ bi.product.title | escape }}" width="60" height="60" loading="lazy">
+          {%- elsif bi.product.images.first != blank -%}
+            <img src="{{ bi.product.images.first | image_url: width: 120 }}" alt="{{ bi.product.title | escape }}" width="60" height="60" loading="lazy">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        <div class="{{ prefix }}__bundle-sub-details">
+          <div class="{{ prefix }}__bundle-sub-info">
+            <span class="{{ prefix }}__bundle-sub-role">{{ bi.properties['For'] }}</span>
+            {%- unless bi.product.has_only_default_variant -%}
+              <span class="{{ prefix }}__bundle-sub-variant">{{ bi.variant.title }}</span>
+            {%- endunless -%}
+          </div>
+          <div class="{{ prefix }}__bundle-sub-right">
+            <div class="{{ prefix }}__bundle-sub-qty">
+              {% render 'quantity-input', id: bi.id, initial_value: bi.quantity %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  <div class="{{ prefix }}__bundle-footer">
+    <button type="button" class="{{ prefix }}__bundle-remove-all" data-remove-bundle="{{ item_bundle_id }}">{{ 'cart.general.remove' | t }} Bundle</button>
+  </div>
+</div>

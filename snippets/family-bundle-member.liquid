@@ -1,0 +1,61 @@
+{%- comment -%}
+  Single family bundle member card.
+  Pass in: fb_product, fb_role, fb_label, fb_enabled
+{%- endcomment -%}
+
+<div class="family-bundle__member {% unless fb_enabled %}disabled{% endunless %}" data-bundle-member="{{ fb_role }}">
+  <div class="family-bundle__member-header">
+    <div class="family-bundle__member-info">
+      <span class="family-bundle__member-label fs-body-75">{{ fb_label }}</span>
+      {% comment %} <span class="family-bundle__member-title fs-body-100">{{ fb_product.title }}</span> {% endcomment %}
+    </div>
+    <span class="family-bundle__member-price fs-body-100" data-bundle-member-price>
+      {{ fb_product.selected_or_first_available_variant.price | money }}
+    </span>
+    <label class="family-bundle__toggle">
+      <input type="checkbox" data-bundle-toggle {% if fb_enabled %}checked{% endif %}>
+      <span class="family-bundle__toggle-slider"></span>
+    </label>
+  </div>
+
+  {%- unless fb_product.has_only_default_variant -%}
+    <div class="family-bundle__size-picker" data-bundle-sizes>
+      {%- for option in fb_product.options_with_values -%}
+        <div class="family-bundle__option-row">
+          <label class="product__label fs-body-75">
+            {{ option.name }}:
+            <span class="t-opacity-70" data-bundle-selected-value>-</span>
+          </label>
+          <div class="family-bundle__qty-inline">
+            <span class="fs-body-75 t-opacity-70">Qty:</span>
+            <button type="button" class="family-bundle__qty-btn" data-bundle-qty-minus>-</button>
+            <input type="number" class="family-bundle__qty-input" data-bundle-qty value="1" min="1" max="10" readonly>
+            <button type="button" class="family-bundle__qty-btn" data-bundle-qty-plus>+</button>
+          </div>
+        </div>
+        <div class="family-bundle__chips" data-bundle-chips data-option-name="{{ option.name | escape }}">
+          {%- for value in option.values -%}
+            {%- assign variant_available = false -%}
+            {%- for variant in fb_product.variants -%}
+              {%- if variant.option1 == value or variant.option2 == value or variant.option3 == value -%}
+                {%- if variant.available -%}
+                  {%- assign variant_available = true -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <button
+              type="button"
+              class="family-bundle__chip {% unless variant_available %}sold-out{% endunless %}"
+              data-bundle-chip
+              data-value="{{ value | escape }}"
+              data-available="{{ variant_available }}"
+              {% unless variant_available %}disabled{% endunless %}
+            >{{ value }}</button>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endunless -%}
+
+  <script type="application/json" data-bundle-variants>{{ fb_product.variants | json }}</script>
+</div>
