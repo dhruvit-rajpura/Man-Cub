@@ -360,4 +360,22 @@
 <script>
   /* Bundle remove & qty-0 logic is handled by family-bundle.js initBundleRemoveButtons() */
   if (typeof initBundleRemoveButtons === 'function') initBundleRemoveButtons();
+
+  /* Save cart note via AJAX so it persists when the cart re-renders */
+  (function() {
+    var _noteTimer;
+    document.addEventListener('input', function(e) {
+      var ta = e.target.closest('#CartSpecialInstructions');
+      if (!ta) return;
+      clearTimeout(_noteTimer);
+      _noteTimer = setTimeout(function() {
+        fetch('/cart/update.js', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ note: ta.value })
+        });
+      }, 600);
+    });
+  })();
 </script>

@@ -4518,15 +4518,38 @@ function sortCart(cart) {
   return cart;
 }
 function updateItem(key, quantity) {
-  return get().then(_ref => {
-    let {
-      items
-    } = _ref;
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].key === key) {
-        return changeItem(i + 1, key, quantity); // shopify cart is a 1-based index
-      }
+  return fetch(paths.change, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id: key,
+      quantity
+    })
+  }).then(res => {
+    if (res.status == "422") {
+      const error = {
+        code: 422,
+        message: strings$6.quantityError
+      };
+      handleError(error, "changeItem", key);
+    } else {
+      return res.json();
     }
+  }).then(cart => {
+    if (!cart) return;
+    r$1("cart:updated", {
+      cart
+    });
+    r$1("quick-cart:updated");
+    if (useCustomEvents$3) {
+      dispatchCustomEvent("cart:updated", {
+        cart
+      });
+    }
+    return sortCart(cart);
   });
 }
 function changeItem(line, itemKey, quantity) {
@@ -11036,11 +11059,7 @@ register("shoppable", {
         this.animateShoppableImage = animateShoppableImage(this.container);
       }
 
-      // Show the first hotspot as active if showing as card and above drawer
-      // showing screen width
-      if (window.matchMedia(getMediaQuery("above-960")).matches && this.hotspots.length) {
-        this._activateHotspot(0);
-      }
+
     } else {
       if (shouldAnimate(this.container)) {
         this.animateShoppableFeature = animateShoppableFeature(this.container);

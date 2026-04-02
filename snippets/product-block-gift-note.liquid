@@ -129,13 +129,17 @@
   (function() {
     var block = document.querySelector('[data-mc-gift-note]');
     if (!block) return;
+    /* Prevent double-init if script runs again after re-render */
+    if (block._mcGiftInit) return;
+    block._mcGiftInit = true;
 
     var toggle = block.querySelector('[data-mc-gift-toggle]');
     var field = block.querySelector('[data-mc-gift-field]');
     var textarea = block.querySelector('[data-mc-gift-textarea]');
     var counter = block.querySelector('[data-mc-gift-counter]');
     var maxChars = parseInt(textarea.getAttribute('maxlength')) || 250;
-    var isOpen = false;
+    /* Sync initial state from DOM so it survives any re-render */
+    var isOpen = field.style.display !== 'none';
 
     toggle.addEventListener('click', function() {
       isOpen = !isOpen;

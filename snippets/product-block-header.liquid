@@ -100,7 +100,8 @@
         assign pdp_kid = product.metafields.custom.kid_product.value
         assign pdp_man = product.metafields.custom.man_product.value
         assign pdp_woman = product.metafields.custom.women_product.value
-        if pdp_kid != blank or pdp_man != blank or pdp_woman != blank
+        assign pdp_girl = product.metafields.custom.girl_product.value
+        if pdp_kid != blank or pdp_man != blank or pdp_woman != blank or pdp_girl != blank
           assign pdp_is_bundle = true
           if pdp_kid != blank
             assign pdp_bundle_price = pdp_bundle_price | plus: pdp_kid.price
@@ -110,6 +111,9 @@
           endif
           if pdp_woman != blank
             assign pdp_bundle_price = pdp_bundle_price | plus: pdp_woman.price
+          endif
+          if pdp_girl != blank
+            assign pdp_bundle_price = pdp_bundle_price | plus: pdp_girl.price
           endif
         endif
       -%}
@@ -133,7 +137,6 @@
 
           {%- if pdp_is_bundle -%}
             {%- liquid
-              assign pdp_girl = product.metafields.custom.girl_product.value
               assign member_names_arr = ''
               if pdp_man != blank
                 assign member_names_arr = member_names_arr | append: 'Man,'

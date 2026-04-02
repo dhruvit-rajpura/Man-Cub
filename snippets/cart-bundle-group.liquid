@@ -10,19 +10,20 @@
 {%- endcomment -%}
 
 {%- assign bundle_line_total = 0 -%}
-{%- assign bundle_member_count = 0 -%}
+{%- assign bundle_gift_note = '' -%}
 {%- for bi in cart.items -%}
   {%- if bi.properties['_bundle_id'] == item_bundle_id -%}
     {%- assign bundle_line_total = bundle_line_total | plus: bi.final_line_price -%}
-    {%- assign bundle_member_count = bundle_member_count | plus: 1 -%}
+    {%- if bundle_gift_note == blank and bi.properties['Gift Message'] != blank -%}
+      {%- assign bundle_gift_note = bi.properties['Gift Message'] -%}
+    {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
 
 <div class="{{ prefix }}__bundle-group" data-bundle-group="{{ item_bundle_id }}">
   <div class="{{ prefix }}__bundle-header">
     <div class="{{ prefix }}__bundle-header-info">
-      <h4 class="{{ prefix }}__bundle-title fs-product-card-title">{{ item_bundle_name | default: 'Family Bundle' }} — Family Bundle</h4>
-      <span class="{{ prefix }}__bundle-count fs-body-50 t-opacity-60">{{ bundle_member_count }} items</span>
+      <h4 class="{{ prefix }}__bundle-title fs-product-card-title">{{ item_bundle_name | default: 'Family Bundle' }}</h4>
     </div>
     <div class="{{ prefix }}__bundle-header-total fs-body-100">
       {{ bundle_line_total | money }}
@@ -65,6 +66,9 @@
   {%- endfor -%}
 
   <div class="{{ prefix }}__bundle-footer">
+    {%- if bundle_gift_note != blank -%}
+      <p class="{{ prefix }}__bundle-gift-note">🎁 {{ bundle_gift_note }}</p>
+    {%- endif -%}
     <button type="button" class="{{ prefix }}__bundle-remove-all" data-remove-bundle="{{ item_bundle_id }}">{{ 'cart.general.remove' | t }} Bundle</button>
   </div>
 </div>

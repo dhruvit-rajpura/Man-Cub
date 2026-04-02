@@ -358,6 +358,9 @@ window._familyBundleLoaded = true;
       var enabledCount = 0;
       var bundleId = 'FB-' + Date.now();
       var cleanTitle = parentTitle.replace(/\s*\([^)]*\)\s*/g, '').trim();
+      // Read gift note if present on product page
+      var giftNoteEl = document.querySelector('[data-mc-gift-textarea]');
+      var giftNote = giftNoteEl ? giftNoteEl.value.trim() : '';
 
       var members = bundle.querySelectorAll('[data-bundle-member]');
       for (var i = 0; i < members.length; i++) {
@@ -374,11 +377,9 @@ window._familyBundleLoaded = true;
           var variant = getSelectedVariant(m);
           if (!variant) { showError('Please select a valid option for ' + label); return; }
           if (!variant.available) { showError(label + ' — selected option is sold out'); return; }
-          items.push({
-            id: variant.id,
-            quantity: 1,
-            properties: { 'Bundle': cleanTitle, 'For': label, '_bundle_id': bundleId }
-          });
+          var props1 = { 'Bundle': cleanTitle, 'For': label, '_bundle_id': bundleId };
+          if (giftNote) props1['Gift Message'] = giftNote;
+          items.push({ id: variant.id, quantity: 1, properties: props1 });
         } else {
           for (var r = 0; r < rows.length; r++) {
             var row = rows[r];
@@ -397,11 +398,9 @@ window._familyBundleLoaded = true;
             var qtyInput = row.querySelector('[data-bundle-qty]');
             var qty = parseInt((qtyInput || { value: 1 }).value) || 1;
 
-            items.push({
-              id: variant.id,
-              quantity: qty,
-              properties: { 'Bundle': cleanTitle, 'For': label, '_bundle_id': bundleId }
-            });
+            var props2 = { 'Bundle': cleanTitle, 'For': label, '_bundle_id': bundleId };
+            if (giftNote) props2['Gift Message'] = giftNote;
+            items.push({ id: variant.id, quantity: qty, properties: props2 });
           }
         }
       }
@@ -542,8 +541,7 @@ window._familyBundleLoaded = true;
             group.style.marginBottom = '0';
           }
 
-          // Re-init after theme finishes re-rendering
-          setTimeout(function() { initBundleCartButtons(); }, 500);
+          // Observer handles re-init after theme finishes re-rendering
         })
         .catch(function(err) {
           // Reset button state on error
@@ -574,27 +572,29 @@ window._familyBundleLoaded = true;
   var _cartObserver1 = null;
   var _cartObserver2 = null;
 
+  var _reinitTimer = null;
+  function debouncedReinit() {
+    clearTimeout(_reinitTimer);
+    _reinitTimer = setTimeout(initBundleCartButtons, 150);
+  }
+
   function watchCartChanges() {
     /* Disconnect existing observers to prevent memory leaks */
     if (_cartObserver1) { _cartObserver1.disconnect(); _cartObserver1 = null; }
     if (_cartObserver2) { _cartObserver2.disconnect(); _cartObserver2 = null; }
 
-    // Quick cart container
+    // Quick cart — watch full subtree so we catch items re-renders
     var qcContainer = document.querySelector('.quick-cart__container');
     if (qcContainer) {
-      _cartObserver1 = new MutationObserver(function() {
-        initBundleCartButtons();
-      });
-      _cartObserver1.observe(qcContainer, { childList: true, subtree: false });
+      _cartObserver1 = new MutationObserver(debouncedReinit);
+      _cartObserver1.observe(qcContainer, { childList: true, subtree: true });
     }
 
-    // Full cart container
+    // Full cart page container
     var cartContainer = document.querySelector('.cart__items');
     if (cartContainer) {
-      _cartObserver2 = new MutationObserver(function() {
-        initBundleCartButtons();
-      });
-      _cartObserver2.observe(cartContainer, { childList: true, subtree: false });
+      _cartObserver2 = new MutationObserver(debouncedReinit);
+      _cartObserver2.observe(cartContainer, { childList: true, subtree: true });
     }
   }
 
