@@ -31,8 +31,8 @@ window._familyBundleLoaded = true;
     var totalPriceEl = bundle.querySelector('[data-bundle-total-price]');
 
     /* Consistent label mapping — single source of truth */
-    var ROLE_LABELS = { kid: 'Cub', girl: 'Girl', man: 'Man', women: 'Woman' };
-    var ROLE_CART_LABELS = { kid: 'Boy Cub', girl: 'Girl Cub', man: 'Man', women: 'Woman' };
+    var ROLE_LABELS = { kid: 'Cub', girl: 'Girl', man: 'Man', women: 'Woman', woman: 'Woman' };
+    var ROLE_CART_LABELS = { kid: 'Boy Cub', girl: 'Girl Cub', man: 'Man', women: 'Woman', woman: 'Woman' };
 
     /* Keep Shopify option order as rendered in Liquid.
        This matches the main product variant order and avoids mis-sorting values like "2X-Large". */

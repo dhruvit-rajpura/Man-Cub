@@ -41,7 +41,7 @@
   {%- if kid_product != blank -%}
     {%- for variant in kid_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
           {%- assign kid_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -52,7 +52,7 @@
   {%- if girl_product != blank -%}
     {%- for variant in girl_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
           {%- assign girl_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -63,7 +63,7 @@
   {%- if man_product != blank -%}
     {%- for variant in man_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
           {%- assign man_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -74,7 +74,7 @@
   {%- if women_product != blank -%}
     {%- for variant in women_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
           {%- assign woman_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -117,15 +117,25 @@
     {%- endif -%}
 
     <div class="family-bundle__members" data-bundle-members>
+      {%- assign rendered_roles = '|' -%}
       {%- for role in priority_list -%}
-        {%- case role -%}
+        {%- assign normalized_role = role | strip -%}
+        {%- if normalized_role == 'woman' -%}
+          {%- assign normalized_role = 'women' -%}
+        {%- endif -%}
+        {%- assign role_token = '|' | append: normalized_role | append: '|' -%}
+        {%- if rendered_roles contains role_token -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign rendered_roles = rendered_roles | append: normalized_role | append: '|' -%}
+        {%- case normalized_role -%}
 
           {%- when 'kid' -%}
             {%- if kid_product != blank -%}
               {%- assign kv = nil -%}
               {%- for variant in kid_product.variants -%}
                 {%- if kv == nil and variant.available -%}
-                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                     {%- assign kv = variant -%}
                   {%- endif -%}
                 {%- endif -%}
@@ -154,9 +164,9 @@
                           {%- assign opt_available = false -%}
                           {%- for variant in kid_product.variants -%}
                             {%- case option.position -%}
-                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
                           <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
@@ -174,7 +184,7 @@
                     <button type="button" class="family-bundle__add-another" data-bundle-add-another>+ add a different {{ kid_label }} Size</button>
                   </div>
                 {%- endunless -%}
-                <script type="application/json" data-bundle-variants>[{%- for variant in kid_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
+                <script type="application/json" data-bundle-variants>[{%- for variant in kid_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
               </div>
             {%- endif -%}
 
@@ -183,7 +193,7 @@
               {%- assign gv = nil -%}
               {%- for variant in girl_product.variants -%}
                 {%- if gv == nil and variant.available -%}
-                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                     {%- assign gv = variant -%}
                   {%- endif -%}
                 {%- endif -%}
@@ -212,9 +222,9 @@
                           {%- assign opt_available = false -%}
                           {%- for variant in girl_product.variants -%}
                             {%- case option.position -%}
-                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
                           <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
@@ -232,7 +242,7 @@
                     <button type="button" class="family-bundle__add-another" data-bundle-add-another>+ add a different {{ girl_label }} Size</button>
                   </div>
                 {%- endunless -%}
-                <script type="application/json" data-bundle-variants>[{%- for variant in girl_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
+                <script type="application/json" data-bundle-variants>[{%- for variant in girl_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
               </div>
             {%- endif -%}
 
@@ -241,7 +251,7 @@
               {%- assign mv = nil -%}
               {%- for variant in man_product.variants -%}
                 {%- if mv == nil and variant.available -%}
-                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                     {%- assign mv = variant -%}
                   {%- endif -%}
                 {%- endif -%}
@@ -270,9 +280,9 @@
                           {%- assign opt_available = false -%}
                           {%- for variant in man_product.variants -%}
                             {%- case option.position -%}
-                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
                           <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
@@ -290,7 +300,7 @@
                     <button type="button" class="family-bundle__add-another" data-bundle-add-another>+ add a different {{ man_label }} Size</button>
                   </div>
                 {%- endunless -%}
-                <script type="application/json" data-bundle-variants>[{%- for variant in man_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
+                <script type="application/json" data-bundle-variants>[{%- for variant in man_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
               </div>
             {%- endif -%}
 
@@ -299,14 +309,14 @@
               {%- assign wv = nil -%}
               {%- for variant in women_product.variants -%}
                 {%- if wv == nil and variant.available -%}
-                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                  {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                     {%- assign wv = variant -%}
                   {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
               {%- unless wv -%}{%- assign wv = women_product.selected_or_first_available_variant | default: women_product.variants.first -%}{%- endunless -%}
 
-              <div class="family-bundle__member" data-bundle-member="woman">
+              <div class="family-bundle__member" data-bundle-member="women">
                 <div class="family-bundle__member-header">
                   <div class="family-bundle__member-info">
                     <span class="family-bundle__member-label fs-body-75">{{ women_label }}</span>
@@ -328,9 +338,9 @@
                           {%- assign opt_available = false -%}
                           {%- for variant in women_product.variants -%}
                             {%- case option.position -%}
-                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
-                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 1 -%}{%- if variant.option1 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 2 -%}{%- if variant.option2 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
+                              {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
                           <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
@@ -348,7 +358,7 @@
                     <button type="button" class="family-bundle__add-another" data-bundle-add-another>+ add a different {{ women_label }} Size</button>
                   </div>
                 {%- endunless -%}
-                <script type="application/json" data-bundle-variants>[{%- for variant in women_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
+                <script type="application/json" data-bundle-variants>[{%- for variant in women_product.variants -%}{%- assign real_available = false -%}{%- if variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign real_available = true -%}{%- endif -%}{%- endif -%}{"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"available":{{ real_available }},"inventory_quantity":{{ variant.inventory_quantity | default: 0 }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
               </div>
             {%- endif -%}
 
@@ -365,7 +375,7 @@
           {%- if kid_product != blank -%}
             {%- for variant in kid_product.variants -%}
               {%- if variant.available -%}
-                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                   {%- assign bundle_total = bundle_total | plus: variant.price -%}
                   {%- break -%}
                 {%- endif -%}
@@ -375,7 +385,7 @@
           {%- if girl_product != blank -%}
             {%- for variant in girl_product.variants -%}
               {%- if variant.available -%}
-                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                   {%- assign bundle_total = bundle_total | plus: variant.price -%}
                   {%- break -%}
                 {%- endif -%}
@@ -385,7 +395,7 @@
           {%- if man_product != blank -%}
             {%- for variant in man_product.variants -%}
               {%- if variant.available -%}
-                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                   {%- assign bundle_total = bundle_total | plus: variant.price -%}
                   {%- break -%}
                 {%- endif -%}
@@ -395,7 +405,7 @@
           {%- if women_product != blank -%}
             {%- for variant in women_product.variants -%}
               {%- if variant.available -%}
-                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 -%}
+                {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
                   {%- assign bundle_total = bundle_total | plus: variant.price -%}
                   {%- break -%}
                 {%- endif -%}
