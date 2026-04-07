@@ -34,27 +34,8 @@ window._familyBundleLoaded = true;
     var ROLE_LABELS = { kid: 'Cub', girl: 'Girl', man: 'Man', women: 'Woman' };
     var ROLE_CART_LABELS = { kid: 'Boy Cub', girl: 'Girl Cub', man: 'Man', women: 'Woman' };
 
-    /* Sort size chips: small → large, available first, sold-out last */
-    var sizeOrder = [];
-
-    function getSizeIndex(val) {
-      var v = val.toLowerCase().trim();
-      var idx = sizeOrder.indexOf(v);
-      if (idx !== -1) return idx;
-      var num = parseFloat(v);
-      if (!isNaN(num)) return 100 + num;
-      return 200;
-    }
-
-    function sortChips(chipContainer) {
-      var chips = Array.from(chipContainer.querySelectorAll('[data-bundle-chip]'));
-      chips.sort(function(a, b) {
-        return getSizeIndex(a.getAttribute('data-value')) - getSizeIndex(b.getAttribute('data-value'));
-      });
-      chips.forEach(function(chip) { chipContainer.appendChild(chip); });
-    }
-
-    bundle.querySelectorAll('[data-bundle-chips]').forEach(sortChips);
+    /* Keep Shopify option order as rendered in Liquid.
+       This matches the main product variant order and avoids mis-sorting values like "2X-Large". */
 
     // Hide standalone quantity selector & Buy it now
     ['.product__controls-group-quantity',
@@ -196,11 +177,22 @@ window._familyBundleLoaded = true;
           if (val > 1) {
             val--;
           } else {
-            /* If qty is 1 and this is an additional section, remove it */
+            /* If qty is 1, remove clone rows or disable primary member rows */
             var additionalSection = (minus).closest('.family-bundle__additional-section');
             if (additionalSection) {
               additionalSection.remove();
               updateTotal();
+              return;
+            }
+
+            var member = (minus).closest('[data-bundle-member]');
+            var memberToggle = member ? member.querySelector('[data-bundle-toggle]') : null;
+            if (member && memberToggle && memberToggle.checked) {
+              memberToggle.checked = false;
+              member.classList.add('disabled');
+              updateTotal();
+              updateIncludesText();
+              hideError();
               return;
             }
           }
@@ -251,7 +243,6 @@ window._familyBundleLoaded = true;
 
       var cloneChips = rowClone.querySelector('[data-bundle-chips]');
       if (cloneChips) {
-        sortChips(cloneChips);
         /* Auto-select first available size */
         var firstAvail = cloneChips.querySelector('[data-available="true"]');
         if (firstAvail) firstAvail.classList.add('selected');
