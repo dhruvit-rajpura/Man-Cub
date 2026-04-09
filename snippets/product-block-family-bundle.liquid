@@ -39,46 +39,24 @@
   {%- comment -%} Pre-check stock for all members {%- endcomment -%}
   {%- assign kid_has_stock = false -%}
   {%- if kid_product != blank -%}
-    {%- for variant in kid_product.variants -%}
-      {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
-          {%- assign kid_has_stock = true -%}
-        {%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
+      {%- assign kid_has_stock = true -%} 
   {%- endif -%}
 
   {%- assign girl_has_stock = false -%}
   {%- if girl_product != blank -%}
-    {%- for variant in girl_product.variants -%}
-      {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
           {%- assign girl_has_stock = true -%}
-        {%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
+   
   {%- endif -%}
 
   {%- assign man_has_stock = false -%}
   {%- if man_product != blank -%}
-    {%- for variant in man_product.variants -%}
-      {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
           {%- assign man_has_stock = true -%}
-        {%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
   {%- endif -%}
 
   {%- assign woman_has_stock = false -%}
   {%- if women_product != blank -%}
-    {%- for variant in women_product.variants -%}
-      {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
           {%- assign woman_has_stock = true -%}
-        {%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
+  
   {%- endif -%}
 
   {%- liquid
@@ -117,18 +95,8 @@
     {%- endif -%}
 
     <div class="family-bundle__members" data-bundle-members>
-      {%- assign rendered_roles = '|' -%}
       {%- for role in priority_list -%}
-        {%- assign normalized_role = role | strip -%}
-        {%- if normalized_role == 'woman' -%}
-          {%- assign normalized_role = 'women' -%}
-        {%- endif -%}
-        {%- assign role_token = '|' | append: normalized_role | append: '|' -%}
-        {%- if rendered_roles contains role_token -%}
-          {%- continue -%}
-        {%- endif -%}
-        {%- assign rendered_roles = rendered_roles | append: normalized_role | append: '|' -%}
-        {%- case normalized_role -%}
+        {%- case role -%}
 
           {%- when 'kid' -%}
             {%- if kid_product != blank -%}
