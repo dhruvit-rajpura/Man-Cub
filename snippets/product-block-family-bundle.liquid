@@ -41,7 +41,7 @@
   {%- if kid_product != blank -%}
     {%- for variant in kid_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
           {%- assign kid_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -52,7 +52,7 @@
   {%- if girl_product != blank -%}
     {%- for variant in girl_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
           {%- assign girl_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -63,7 +63,7 @@
   {%- if man_product != blank -%}
     {%- for variant in man_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
           {%- assign man_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -74,7 +74,7 @@
   {%- if women_product != blank -%}
     {%- for variant in women_product.variants -%}
       {%- if variant.available -%}
-        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' or variant.inventory_policy == 'continue' -%}
+        {%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}
           {%- assign woman_has_stock = true -%}
         {%- endif -%}
       {%- endif -%}
@@ -169,7 +169,7 @@
                               {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
-                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
+                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}">{{ value }}</button>
                         {%- endfor -%}
                         </div>
                         <div class="family-bundle__qty-inline">
@@ -227,7 +227,7 @@
                               {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
-                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
+                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}">{{ value }}</button>
                         {%- endfor -%}
                         </div>
                         <div class="family-bundle__qty-inline">
@@ -285,7 +285,7 @@
                               {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
-                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
+                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}">{{ value }}</button>
                         {%- endfor -%}
                         </div>
                         <div class="family-bundle__qty-inline">
@@ -343,7 +343,7 @@
                               {%- when 3 -%}{%- if variant.option3 == value and variant.available -%}{%- if variant.inventory_management == blank or variant.inventory_quantity > 0 or variant.inventory_policy == 'continue' -%}{%- assign opt_available = true -%}{%- endif -%}{%- endif -%}
                             {%- endcase -%}
                           {%- endfor -%}
-                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}" {% unless opt_available %}disabled{% endunless %}>{{ value }}</button>
+                          <button type="button" class="family-bundle__chip{% unless opt_available %} sold-out{% endunless %}" data-bundle-chip data-value="{{ value | escape }}" data-available="{{ opt_available }}">{{ value }}</button>
                         {%- endfor -%}
                         </div>
                         <div class="family-bundle__qty-inline">
