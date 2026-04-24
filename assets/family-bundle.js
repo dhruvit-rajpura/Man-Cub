@@ -28,6 +28,7 @@ window._familyBundleLoaded = true;
     if (!bundle) return;
 
     var parentTitle = bundle.getAttribute('data-parent-title') || 'Family Bundle';
+    var parentHandle = bundle.getAttribute('data-parent-handle') || '';
     var totalPriceEl = bundle.querySelector('[data-bundle-total-price]');
 
     /* Consistent label mapping — single source of truth */
@@ -54,8 +55,6 @@ window._familyBundleLoaded = true;
     function syncStickyBarPrice(total) {
       var sp = document.querySelector('.sticky-atc-bar__price [data-price]');
       if (sp) sp.textContent = formatMoney(total);
-      var sp_main = document.querySelector('.product__price-and-ratings [data-price]');
-      if (sp_main) sp_main.textContent = formatMoney(total);
       var sc = document.querySelector('.sticky-atc-bar__price [data-compare-price]');
       if (sc) sc.textContent = '';
     }
@@ -260,18 +259,6 @@ window._familyBundleLoaded = true;
       syncStickyBarPrice(total);
     }
 
-    // Auto-select first available size
-    bundle.querySelectorAll('[data-bundle-chips]').forEach(function(group) {
-      var first = group.querySelector('[data-available="true"]');
-      if (first) {
-        first.classList.add('selected');
-        var row = group.previousElementSibling;
-        if (row) {
-          var lbl = row.querySelector('[data-bundle-selected-value]');
-          if (lbl) lbl.textContent = first.getAttribute('data-value');
-        }
-      }
-    });
 
     // Chip & qty events
     bundle.addEventListener('click', function(e) {
@@ -280,8 +267,8 @@ window._familyBundleLoaded = true;
         var group = chip.closest('[data-bundle-chips]');
         var wasSelected = chip.classList.contains('selected');
 
-        /* Allow users to undo accidental OOS selection by clicking the same chip again */
-        if (wasSelected && isChipOutOfStock(chip)) {
+        /* Clicking an already-selected chip deselects it */
+        if (wasSelected) {
           chip.classList.remove('selected');
           chip.classList.remove('oos-selected');
           updateTotal();
@@ -532,6 +519,7 @@ window._familyBundleLoaded = true;
             return;
           }
           var props1 = { 'Bundle': cleanTitle, 'For': label, '_bundle_id': bundleId };
+          if (parentHandle) props1['_bundle_parent_handle'] = parentHandle;
           if (giftNote) props1['Gift Message'] = giftNote;
           items.push({ id: variant.id, quantity: 1, properties: props1 });
         } else {
@@ -557,6 +545,7 @@ window._familyBundleLoaded = true;
             var qty = parseInt((qtyInput || { value: 1 }).value) || 1;
 
             var props2 = { 'Bundle': cleanTitle, 'For': label, '_bundle_id': bundleId };
+            if (parentHandle) props2['_bundle_parent_handle'] = parentHandle;
             if (giftNote) props2['Gift Message'] = giftNote;
             items.push({ id: variant.id, quantity: qty, properties: props2 });
           }

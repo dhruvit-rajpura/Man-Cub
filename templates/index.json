@@ -379,7 +379,7 @@
         "spacer-1": {
           "type": "spacer",
           "settings": {
-            "space": 28
+            "space": 64
           }
         },
         "accent": {
@@ -397,9 +397,25 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "title": "Our effortless yet distinctive pieces are designed to be mixed & matched, worn together to transform an outfit into an art of functional self-expression.",
+            "title": "Matching outfits. Designed properly. No compromise on style or quality.",
             "heading_tag": "h2",
             "heading_font_class": "fs-heading-1-base"
+          }
+        },
+        "subheading_ajtVx9": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Cubs copy what they love - we make it worth copying.",
+            "subheading_tag": "h3",
+            "subheading_font_class": "fs-heading-5-base"
+          }
+        },
+        "subheading_c8tApr": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Made for shared style, real connection, and MANCUB moments",
+            "subheading_tag": "h3",
+            "subheading_font_class": "fs-heading-5-base"
           }
         },
         "button": {
@@ -411,6 +427,12 @@
             "button_bg_color": "",
             "button_text_color": "#ffffff"
           }
+        },
+        "spacer_kk8FQp": {
+          "type": "spacer",
+          "settings": {
+            "space": 64
+          }
         }
       },
       "block_order": [
@@ -418,7 +440,10 @@
         "accent",
         "spacer-2",
         "heading",
-        "button"
+        "subheading_ajtVx9",
+        "subheading_c8tApr",
+        "button",
+        "spacer_kk8FQp"
       ],
       "settings": {
         "alignment": "left_left",
@@ -472,6 +497,7 @@
         "text_zRAzNj",
         "button_PzD9Dp"
       ],
+      "disabled": true,
       "name": "t:sections.image_hero.presets.name",
       "settings": {
         "image_aspect": "custom",

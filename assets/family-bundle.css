@@ -129,12 +129,13 @@
 /* Size picker */
 .family-bundle__size-picker {
   margin-top: 10px;
+  padding-top: 4px;
   transition: opacity 0.3s ease, max-height 0.3s ease;
-  max-height: 300px;
-  overflow: hidden;
+  max-height: 500px;
+  overflow: visible;
 }
 .family-bundle__member.disabled .family-bundle__size-picker {
-  opacity: 0; pointer-events: none; max-height: 0; margin-top: 0; overflow: hidden;
+  opacity: 0; pointer-events: none; max-height: 0; margin-top: 0; overflow: hidden; padding-top: 0;
 }
 .family-bundle__member.disabled .family-bundle__member-header {
   opacity: 1;
@@ -183,9 +184,9 @@
   border-color: var(--color-text);
 }
 .family-bundle__chip.selected {
-  background: var(--fb-chip-selected-bg);
+  background:#1d212a;
   color: var(--fb-chip-selected-color) !important;
-  border-color: var(--fb-chip-selected-bg);
+  border-color: #1d212a;
 }
 .family-bundle__chip.sold-out {
   opacity: 0.25;
